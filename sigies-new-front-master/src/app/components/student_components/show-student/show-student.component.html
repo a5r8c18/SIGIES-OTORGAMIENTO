@@ -1,0 +1,61 @@
+<div class="dropdown">
+  <button
+    type="button"
+    class="btn btn-primary dropdown-toggle"
+    data-bs-toggle="dropdown"
+  >
+    Acciones
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+      <button class="dropdown-item" (click)="includeStudent()">
+        Agregar nuevo
+      </button>
+    </li>
+    <li>
+      <button
+        class="dropdown-item"
+        (click)="modifyStudent(student.ci_passport)"
+      >
+        Editar
+      </button>
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <button class="dropdown-item" (click)="studentList()">
+        Regresar al listado
+      </button>
+    </li>
+  </ul>
+</div>
+<span>Datos personales</span>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">
+    Carnet de identidad: {{ student.ci_passport }}
+  </li>
+  <li class="list-group-item">Nombre: {{ student.name }}</li>
+  <li class="list-group-item">Apellidos: {{ student.lastname }}</li>
+  <li class="list-group-item">Dirección: {{ student.address }}</li>
+  <li class="list-group-item">Sexo: {{ student.gender }}</li>
+  <li class="list-group-item">Tipo de estudiante: {{ student.foreign }}</li>
+  <li class="list-group-item">
+    Preuniversitario: {{ student.pre_university }}
+  </li>
+  <span>Exámenes de ingreso</span>
+  <li class="list-group-item">
+    Exámenes realizados: {{ student.entrance_exams }}
+  </li>
+  <li class="list-group-item">Escalafón: {{ student.grade_average }}</li>
+  <li class="list-group-item">
+    Índice académico: {{ student.academic_index }}
+  </li>
+  <span>Otros datos</span>
+  <li class="list-group-item">
+    Especialidad otorgada: {{ student.awarded_specialty }}
+  </li>
+  <li class="list-group-item">CES: {{ student.ces }}</li>
+  <li class="list-group-item">Funcionario que autoriza: Averiguar!!!!</li>
+  <li class="list-group-item">
+    Derecho a beca: {{ student.scholarship_right }}
+  </li>
+</ul>

@@ -1,0 +1,125 @@
+<div class="form-body">
+  <div class="row">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <h3>
+            Registra listado de otorgamiento en un procesamiento de una
+            convocatoria
+          </h3>
+          <p>Rellena los datos a continuacion</p>
+          <div *ngIf="mostrarMensaje" class="alert alert-success" role="alert">
+            {{ mensaje }}
+          </div>
+          <form
+            class="requires-validation"
+            [formGroup]="announcementForm"
+            novalidate
+          >
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="name"
+                placeholder="Nombre"
+                pattern="[A-Za-z]+"
+                title="Solo se permiten letras"
+                required
+              />
+              <div class="valid-feedback">Campo nombre relleno</div>
+              <div class="invalid-feedback">
+                El nombre del funcionario no debe estar en blanco ni tener
+                numeros o caracteres especiales.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="description"
+                placeholder="Descripcion"
+                pattern="(?=.*[A-Za-z])[A-Za-z\s]+"
+                required
+              />
+              <div class="text-danger error-message" style="display: none">
+                Solo se permiten letras.
+              </div>
+              <div class="valid-feedback">Campo apellido relleno</div>
+              <div class="invalid-feedback">
+                El apellido del funcionario no debe estar en blanco ni tener
+                numeros o caracteres especiales.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <select class="form-select mt-3" formControlName="type" required>
+                <option selected disabled value="">Tipo</option>
+                <option value="masculino">Otorgamiento Discapacitado</option>
+                <option value="femenino">Otorgamiento</option>
+              </select>
+              <div class="valid-feedback">You selected a position!</div>
+              <div class="invalid-feedback">Please select a position!</div>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                formControlName="official_aprove"
+                type="checkbox"
+                value=""
+                id="invalidCheck"
+              />
+              <label class="form-check-label" for="foreign"
+                >Funcionario que autoriza</label
+              >
+              <div class="invalid-feedback">
+                Please confirm that the entered data are all correct!
+              </div>
+            </div>
+
+            <div class="form-button mt-3">
+              <button (click)="removeStudentfromList()" class="btn btn-primary">
+                Eliminar
+              </button>
+              <button
+                (click)="includeStudentinList()"
+                type="submit"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#infoModal"
+              >
+                Agregar nuevo
+              </button>
+            </div>
+
+            <div class="form-button mt-3">
+              <button (click)="announcementList()" class="btn btn-primary">
+                Cancelar
+              </button>
+              <button
+                (click)="includeAnnouncementContinue()"
+                type="submit"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#infoModal"
+              >
+                Crear y agregar otro
+              </button>
+
+              <button
+                (click)="includeAnnouncementEnd()"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Crear y regresar al listado
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

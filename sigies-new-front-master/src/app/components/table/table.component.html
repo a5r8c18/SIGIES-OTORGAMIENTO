@@ -1,0 +1,214 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<app-confirm-dialog
+  [action]="action"
+  (confirmed)="confirmHandleInfo($event)"
+></app-confirm-dialog>
+<div class="card">
+  <div class="table-title">
+    <h2>Listados de funcionarios de SIES-3</h2>
+  </div>
+  <div *ngIf="showFilterOfficial">
+    <app-filter-official
+      (infoFetched)="handleInfo($event)"
+    ></app-filter-official>
+  </div>
+
+  <div class="button-container">
+    <div *ngIf="inOfficial">
+      <button (click)="filterOfficial()" title="Delete Selected">
+        <span>Filtros</span>
+      </button>
+    </div>
+    <button
+      *ngIf="isDataAvailable()"
+      data-bs-toggle="modal"
+      data-bs-target="#myModal"
+      class="danger"
+      (click)="confirmAction('eliminar por cantidad', '-1')"
+      title="Delete Selected"
+    >
+      <svg viewBox="0 0 448 512" width="16" title="trash-alt">
+        <path
+          d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+        ></path>
+      </svg>
+    </button>
+
+    <button class="primary" (click)="include()" title="Add New Data">
+      <!-- <svg viewBox="0 0 512 512" width="16" title="plus-circle">
+        <path
+          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+        ></path>
+      </svg> -->
+      <span>Agregar nuevo</span>
+    </button>
+  </div>
+  <div *ngIf="mostrarMensaje" class="alert alert-success" role="alert">
+    {{ mensaje }}
+  </div>
+  <div class="table-concept">
+    <input
+      class="table-radio"
+      type="radio"
+      name="table_radio"
+      id="table_radio_0"
+      checked="checked"
+    />
+    <div class="table-display">
+      Mostrando de 1 a {{ selectedValue }} de {{ datas.length }} funcionarios en
+      total
+
+      <div class="col-md-12">
+        <span>Selección catidad de elementos por pagina: </span>
+        <select
+          class="mt-3"
+          [(ngModel)]="selectedValue"
+          (ngModelChange)="onSelectChange($event)"
+        >
+          <option value="16">16</option>
+          <option value="32">32</option>
+          <option value="64">64</option>
+          <option value="128">128</option>
+          <option value="192">192</option>
+        </select>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th
+            *ngFor="let column of columns; let i = index"
+            (click)="sort(i)"
+            [ngClass]="{
+              'sorted-asc': ascendingSort[i],
+              'sorted-desc': !ascendingSort[i]
+            }"
+          >
+            {{ column }}
+            <span *ngIf="column !== 'Acciones'">
+              <span class="sort-icon" *ngIf="ascendingSort[i]">▲</span>
+              <span class="sort-icon" *ngIf="!ascendingSort[i]">▼</span>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let data of getGrouped()[
+              currentPage >= getGrouped().length ? currentPage - 1 : currentPage
+            ]
+          "
+        >
+          <td>
+            <input
+              class="individual-checkbox"
+              type="checkbox"
+              [value]="data.key"
+              (change)="onCheckboxChange($event)"
+            />
+          </td>
+          <td *ngFor="let value of data.values">
+            {{ value }}
+          </td>
+          <td>
+            <button class="primary" (click)="show(data.key)" title="Show Data">
+              <span>Mostrar</span>
+            </button>
+            <button
+              class="primary"
+              (click)="modify(data.key)"
+              title="Edit Data"
+            >
+              <span>Editar</span>
+            </button>
+            <button
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal"
+              class="danger"
+              (click)="confirmAction('eliminar', data.key)"
+              title="Delete Selected"
+            >
+              <span>Eliminar</span>
+            </button>
+          </td>
+        </tr>
+        <!-- <tr *ngFor="let fruta of datos">
+          <td>
+            <input
+              type="checkbox"
+              name="1"
+              (change)="getAlbumId($event, fruta.id)"
+              [checked]="fruta.checked"
+            />
+          </td>
+          <td>{{ fruta.nombre }}</td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <label
+        (click)="changePage(currentPage - 1)"
+        [class.disabled]="currentPage === 0"
+        >&laquo; Anterior</label
+      >
+      <label
+        *ngFor="let group of getGrouped(); let i = index"
+        [class.active]="i === currentPage"
+        (click)="changePage(i)"
+      >
+        {{ i + 1 }}
+      </label>
+      <label
+        (click)="changePage(currentPage + 1)"
+        [class.disabled]="currentPage === getGrouped().length - 1"
+        >Siguiente &raquo;</label
+      >
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input
+            type="checkbox"
+            id="selectAll"
+            aria-label="Checkbox for following text input"
+            onchange="toggleCheckboxes(this)"
+          />
+
+          <span>Todos los elementos(#total)</span>
+        </div>
+      </div>
+    </div>
+    <button
+      *ngIf="isDataAvailable()"
+      data-bs-toggle="modal"
+      data-bs-target="#myModal"
+      class="danger"
+      (click)="confirmAction('eliminar por cantidad', '-1')"
+      title="Delete Selected"
+    >
+      <span>Eliminar</span>
+    </button>
+    <button
+      *ngIf="!isDataAvailable()"
+      class="danger"
+      title="No hay datos disponibles"
+      disabled
+    >
+      <span>Eliminar</span>
+    </button>
+
+    <button class="primary" title="Accept Selected">
+      <span>Aceptar</span>
+    </button>
+    <button class="primary" title="Export Selected">
+      <span>Exportar</span>
+    </button>
+  </div>
+</div>

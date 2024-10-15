@@ -1,0 +1,96 @@
+<div class="form-body">
+  <div class="row">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <h3>Actualiza al Funcionario</h3>
+          <p>Actualiza los datos a continuacion según convenga</p>
+          <div *ngIf="mostrarMensaje" class="alert alert-success" role="alert">
+            {{ mensaje }}
+          </div>
+          <form
+            class="requires-validation"
+            [formGroup]="officialForm"
+            novalidate
+          >
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="officialName"
+                placeholder="Nombre"
+                pattern="[A-Za-z]+"
+                title="Solo se permiten letras"
+                required
+              />
+              <div class="valid-feedback">Campo nombre relleno</div>
+              <div class="invalid-feedback">
+                El nombre del funcionario no debe estar en blanco ni tener
+                numeros o caracteres especiales.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="officialLastName"
+                placeholder="Apellidos"
+                pattern="(?=.*[A-Za-z])[A-Za-z\s]+"
+                required
+              />
+              <div class="text-danger error-message" style="display: none">
+                Solo se permiten letras.
+              </div>
+              <div class="valid-feedback">Campo apellido relleno</div>
+              <div class="invalid-feedback">
+                El apellido del funcionario no debe estar en blanco ni tener
+                numeros o caracteres especiales.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="officialPosition"
+                placeholder="Position"
+                pattern="[A-Za-z]+"
+                required
+              />
+              <div class="valid-feedback">Campo cargo relleno</div>
+              <div class="invalid-feedback">
+                El apellido del funcionario no debe estar en blanco ni tener
+                numeros o caracteres especiales.
+              </div>
+            </div>
+            <div class="form-button mt-3">
+              <button (click)="officialList()" class="btn btn-primary">
+                Cancelar
+              </button>
+              <button
+                (click)="modifyOfficialContinue()"
+                type="submit"
+                class="btn btn-primary"
+                id="toastbtn"
+              >
+                Actualizar
+              </button>
+
+              <button
+                (click)="modifyOfficialEnd()"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Actualizar y regresar al listado
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

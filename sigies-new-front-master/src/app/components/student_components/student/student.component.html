@@ -1,0 +1,11 @@
+<app-table
+  [columns]="columns"
+  [datas]="datas"
+  [information]="information"
+  [includeLink]="includeLink"
+  [showLink]="showLink"
+  [modifyLink]="modifyLink"
+  [removeLink]="removeLink"
+  (confirmed)="confirmHandleInfo($event)"
+  (infoFetched)="handleInfo($event)"
+></app-table>

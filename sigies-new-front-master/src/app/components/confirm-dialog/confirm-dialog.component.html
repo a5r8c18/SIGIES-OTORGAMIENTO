@@ -1,0 +1,39 @@
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">CONFIRMACION:</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">Desea realizar la acción: {{ action }}</div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button
+          (click)="notifyConfirm()"
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+        >
+          Aceptar
+        </button>
+        <button
+          (click)="notifyCancel()"
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

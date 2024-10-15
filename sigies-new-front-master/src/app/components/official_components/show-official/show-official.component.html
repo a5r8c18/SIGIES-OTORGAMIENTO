@@ -1,0 +1,36 @@
+<div class="dropdown">
+  <button
+    type="button"
+    class="btn btn-primary dropdown-toggle"
+    data-bs-toggle="dropdown"
+  >
+    Acciones
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+      <button class="dropdown-item" (click)="includeOfficial()">
+        Agregar nuevo
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item" (click)="modifyOfficial(official.id)">
+        Editar
+      </button>
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <button class="dropdown-item" (click)="officialList()">
+        Regresar al listado
+      </button>
+    </li>
+  </ul>
+</div>
+
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">Funcionario</li>
+  <li class="list-group-item">Convocatoria: rellenar ni idea</li>
+  <li class="list-group-item">Procesamiento: rellenar ni idea</li>
+  <li class="list-group-item">Nombre: {{ official.name }}</li>
+  <li class="list-group-item">Apellidos: {{ official.lastname }}</li>
+  <li class="list-group-item">Cargo: {{ official.position }}</li>
+</ul>

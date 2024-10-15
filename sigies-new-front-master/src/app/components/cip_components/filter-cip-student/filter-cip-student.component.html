@@ -1,0 +1,85 @@
+<form [formGroup]="cipStudentForm">
+  <button class="primary" title="Export Selected">
+    <span>Exportar</span>
+  </button>
+  <div class="form-group input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01"
+        >Convocatoria</label
+      >
+    </div>
+    <select
+      class="custom-select"
+      formControlName="officialAnnouncement"
+      class="form-control"
+      id="inputGroupSelect01"
+    >
+      <option selected>Choose...</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+  <div class="form-group input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01"
+        >Procesamiento</label
+      >
+    </div>
+    <select
+      class="custom-select"
+      formControlName="officialProcessing"
+      class="form-control"
+      id="inputGroupSelect01"
+    >
+      <option selected>Choose...</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Nombre(s)</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="officialName"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Apellidos</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="officialLastName"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Cargo</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="officialPosition"
+    />
+  </div>
+  <div class="button-container">
+    <button (click)="filter()" type="submit" title="Delete Selected">
+      <span>Filtrar</span>
+    </button>
+    <button (click)="restore()" title="Delete Selected">
+      <span>Restablecer</span>
+    </button>
+  </div>
+</form>
