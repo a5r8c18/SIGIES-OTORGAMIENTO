@@ -8,10 +8,9 @@ describe('FilterDiulStudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilterDiulStudentComponent]
-    })
-    .compileComponents();
-    
+      imports: [FilterDiulStudentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FilterDiulStudentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

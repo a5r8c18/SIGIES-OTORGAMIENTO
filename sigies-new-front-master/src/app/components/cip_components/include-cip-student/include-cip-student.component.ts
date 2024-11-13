@@ -7,8 +7,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OfficialService } from 'src/app/services/official.service';
 import { StudentCipService } from 'src/app/services/student-cip.service';
+import { StudentService } from 'src/app/services/student.service';
 import { CipStudent } from 'src/app/shared/models/CipStudent';
+import { Official } from 'src/app/shared/models/Official';
+import { Student } from 'src/app/shared/models/Student';
 
 @Component({
   selector: 'app-include-cip-student',
@@ -25,9 +29,11 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
   done!: string;
   studentCi: string = '';
   confirm: boolean | undefined;
-  students: CipStudent[] = [];
+  cipStudents: CipStudent[] = [];
+  officials: Official[] = [];
+  students: Student[] = [];
   newStudent!: CipStudent;
-  studentForm!: FormGroup;
+  studentCipForm!: FormGroup;
   isSubmitted = false;
 
   mensaje: string = '';
@@ -37,58 +43,74 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-  ) {}
+    private studentService: StudentService,
+    private officialService: OfficialService,
+  ) {
+    this.getOfficials();
+    this.getStudents();
+  }
+  getOfficials(): void {
+    const officialsObservable = this.officialService.getAll();
+    officialsObservable.subscribe((serverOfficials) => {
+      this.officials = serverOfficials;
+    });
+  }
+  getStudents(): void {
+    const studentsObservable = this.studentService.getAll();
+    studentsObservable.subscribe((studentService) => {
+      this.students = studentService;
+    });
+  }
+
   ngOnInit(): void {
-    this.studentForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
-      lastname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
-      ci_passport: ['', [Validators.required]],
-      awarded_specialty: ['', [Validators.required]],
-      gender: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      foreign: ['', []],
-      country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
-      pre_university: ['', [Validators.required]],
-      entrance_exams: ['', [Validators.required]],
-      academic_index: ['', [Validators.required]],
-      grade_average: ['', [Validators.required]],
-      scholarship_right: ['', []],
-      ces: ['', [Validators.required]],
+    this.studentCipForm = this.formBuilder.group({
+      ci_passport: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      student_type: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      description: ['', [Validators.pattern(/^[a-zA-Z ]+$/)]],
+      authorizing_officials: ['', []],
+      commission: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      id_official: ['', [Validators.required]],
     });
   }
 
   includeStudent() {
-    this.isSubmitted = true;
-    if (this.studentForm.invalid) return;
+    // console.log(this.studentDiulForm               );
+    // if (this.studentDiulForm.invalid) return;
 
-    if (this.studentForm.valid) {
-      console.log('Formulario válido:', this.studentForm.value);
-    } else {
-      console.log('Formulario inválido');
+    // if (this.studentDiulForm.valid) {
+    //   console.log('Formulario válido:', this.studentDiulForm.value               );
+    // } else {
+    //   console.log('Formulario inválido'               );
+    // }
+
+    const sv = this.studentCipForm.value;
+
+    if (!sv.authorizing_officials) {
+      sv.authorizing_officials = false;
     }
 
-    // const sv = this.studentForm.value;
-    // const student: CipStudent = {
-    //   id: '1',
-    //   name: sv.name,
-    //   lastname: sv.lastname,
-    //   ci_passport: sv.ci_passport,
-    //   awarded_specialty: sv.awarded_specialty,
-    //   gender: sv.gender,
-    //   address: sv.address,
-    //   foreign: sv.foreign,
-    //   country: sv.country,
-    //   pre_university: sv.pre_university,
-    //   entrance_exams: sv.entrance_exams,
-    //   academic_index: sv.academic_index,
-    //   grade_average: sv.grade_average,
-    //   scholarship_right: sv.scholarship_right,
-    //   ces: sv.ces,
-    // };
+    const diulStudent: CipStudent = {
+      id: '',
+      ci_passport: sv.ci_passport,
+      authorizing_officials: sv.authorizing_officials,
+      commission: sv.commission,
+      id_official: sv.id_official,
+      description: sv.description,
+      student_type: sv.student_type,
+    };
 
-    // this.studentCipService.include(student).subscribe((serverStudent) => {
-    //   this.students = serverStudent;
-    // });
+    this.studentCipService
+      .include(diulStudent)
+      .subscribe((studentCipService) => {
+        console.log(studentCipService);
+        this.cipStudents = studentCipService;
+      });
 
     this.mensaje = 'Ingreso realizado con éxito!';
     this.mostrarMensaje = true;
@@ -97,8 +119,7 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.mostrarMensaje = false;
     }, 3000);
-
-    this.router.navigateByUrl('/assignment/grant/student', {
+    this.router.navigateByUrl('/assignment/grant/cip-student', {
       state: { data: this.mensaje },
     });
   }
@@ -107,21 +128,31 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
   //   this.isSubmitted = true;
   //   if (this.studentForm.invalid) return;
 
-  //   console.warn(this.studentForm.value);
-  //   this.includeStudent();
-  //   this.router.navigateByUrl('/assignment/grant/include-student');
+  //   console.warn(this.studentForm.value               );
+  //   this.includeStudent(               );
+  //   this.router.navigateByUrl('/assignment/grant/include-student'               );
   // }
   // includeStudentEnd(): void {
   //   this.isSubmitted = true;
   //   if (this.studentForm.invalid) return;
 
-  //   this.includeStudent();
-  //   console.warn(this.studentForm.value);
-  //   this.router.navigateByUrl('/assignment/grant/student');
+  //   this.includeStudent(               );
+  //   console.warn(this.studentForm.value               );
+  //   this.router.navigateByUrl('/assignment/grant/student'               );
   // }
 
+  includeStudentCipEnd(): void {
+    this.isSubmitted = true;
+    if (this.studentCipForm.invalid) return;
+    console.log('ggggggggggggg');
+    this.includeStudent();
+    this.router.navigateByUrl('/assignment/grant/cip-student', {
+      state: { data: this.mensaje },
+    });
+  }
+
   studentList(): void {
-    this.router.navigateByUrl('/assignment/grant/student', {
+    this.router.navigateByUrl('/assignment/grant/cip-student', {
       state: { data: 'La acción ha sido cancelada.' },
     });
   }

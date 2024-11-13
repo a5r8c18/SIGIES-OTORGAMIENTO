@@ -46,15 +46,48 @@ export class IncludeOfficialComponent implements OnInit, AfterViewInit {
     this.officialForm = this.formBuilder.group({
       officialName: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       officialLastName: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       officialPosition: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      convocation: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      prosecution: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
     });
   }
@@ -67,9 +100,9 @@ export class IncludeOfficialComponent implements OnInit, AfterViewInit {
     }
     const fv = this.officialForm.value;
     const official: Official = {
-      id: Math.floor(Math.random() * 101).toString(),
-      convocation: '1',
-      processing: 'Procesamiento rellenar',
+      id: '',
+      convocation: fv.convocation,
+      prosecution: fv.prosecution,
       name: fv.officialName,
       lastname: fv.officialLastName,
       position: fv.officialPosition,
@@ -102,7 +135,7 @@ export class IncludeOfficialComponent implements OnInit, AfterViewInit {
     if (this.officialForm.invalid) return;
 
     this.includeOfficial();
-    // window.location.reload();
+    // window.location.reload(               );
   }
   includeOfficialEnd(): void {
     this.isSubmitted = true;

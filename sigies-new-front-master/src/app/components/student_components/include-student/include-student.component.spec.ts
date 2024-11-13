@@ -8,10 +8,9 @@ describe('IncludeStudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IncludeStudentComponent]
-    })
-    .compileComponents();
-    
+      imports: [IncludeStudentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(IncludeStudentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropdown d-flex justify-content-end mb-3">
   <button
     type="button"
     class="btn btn-primary dropdown-toggle"
@@ -30,14 +30,12 @@
 </div>
 <span>Datos personales</span>
 <ul class="list-group list-group-flush">
-  <li class="list-group-item">
-    Carnet de identidad: {{ student.ci_passport }}
-  </li>
+  <li class="list-group-item">CI/Pasaporte: {{ student.ci_passport }}</li>
   <li class="list-group-item">Nombre: {{ student.name }}</li>
   <li class="list-group-item">Apellidos: {{ student.lastname }}</li>
   <li class="list-group-item">Dirección: {{ student.address }}</li>
   <li class="list-group-item">Sexo: {{ student.gender }}</li>
-  <li class="list-group-item">Tipo de estudiante: {{ student.foreign }}</li>
+  <li class="list-group-item">País: {{ student.country }}</li>
   <li class="list-group-item">
     Preuniversitario: {{ student.pre_university }}
   </li>
@@ -54,8 +52,7 @@
     Especialidad otorgada: {{ student.awarded_specialty }}
   </li>
   <li class="list-group-item">CES: {{ student.ces }}</li>
-  <li class="list-group-item">Funcionario que autoriza: Averiguar!!!!</li>
   <li class="list-group-item">
-    Derecho a beca: {{ student.scholarship_right }}
+    Derecho a beca: {{ student.scholarship_right ? 'Sí' : 'No' }}
   </li>
 </ul>

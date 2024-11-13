@@ -1,0 +1,81 @@
+.button-container {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+}
+.button-container span {
+  color: #8f8f8f;
+  text-align: right;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.button-container button {
+  font-family: inherit;
+  font-size: inherit;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: 0;
+  margin: 0;
+  outline: 0;
+  border-radius: 0;
+  transition: background-color 225ms ease-out;
+}
+.button-container button.primary {
+  background-color: #147eff;
+}
+.button-container button.primary:hover {
+  background-color: #479aff;
+}
+.button-container button.primary:active {
+  background-color: #0065e0;
+}
+.button-container button.primary {
+  background-color: #147eff;
+}
+.button-container button.primary:hover {
+  background-color: #479aff;
+}
+.button-container button.primary:active {
+  background-color: #0065e0;
+}
+.button-container button.danger {
+  background-color: #d11800;
+}
+.button-container button.danger:hover {
+  background-color: #ff2205;
+}
+.button-container button.danger:active {
+  background-color: #9e1200;
+}
+.button-container button svg {
+  fill: #ffffff;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+}
+button {
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+  margin-bottom: 10px !important;
+  border: none; /* Elimina el borde predeterminado */
+  border-radius: 5px; /* Ajusta el valor para el redondeo deseado */
+  padding: 10px 20px; /* Espaciado interno */
+  /* background-color: #007bff; Color de fondo */
+  /* color: white !important; Color del texto */
+
+  transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+
+.effect:hover {
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  background-color: #929599; /* Color de fondo al pasar el mouse */
+}
+
+.text {
+  color: black;
+}

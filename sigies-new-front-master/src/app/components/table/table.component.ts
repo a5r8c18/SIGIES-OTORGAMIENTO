@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
 import { FilterOfficialComponent } from '../official_components/filter-official/filter-official.component';
+import { FilterStudentComponent } from '../student_components/filter-student/filter-student.component';
+import { FilterCipStudentComponent } from '../cip_components/filter-cip-student/filter-cip-student.component';
+import { FilterDiulStudentComponent } from '../diul_components/filter-diul-student/filter-diul-student.component';
+import jsPDF from 'jspdf';
 
 interface Confirmacion {
   confirm: boolean;
@@ -31,6 +35,9 @@ interface Confirmacion {
     FilterOfficialComponent,
     FormsModule,
     ConfirmDialogComponent,
+    FilterStudentComponent,
+    FilterCipStudentComponent,
+    FilterDiulStudentComponent,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
@@ -38,6 +45,13 @@ interface Confirmacion {
     <app-filter-official
       (infoFetched)="handleInfo($event)"
     ></app-filter-official>
+    <app-filter-student (infoFetched)="handleInfo($event)"></app-filter-student>
+    <app-filter-diul-student
+      (infoFetched)="handleInfo($event)"
+    ></app-filter-diul-student>
+    <app-filter-cip-student
+      (infoFetched)="handleInfo($event)"
+    ></app-filter-cip-student>
     <app-confirm-dialog
       [action]="action"
       (confirmed)="confirmHandleInfo($event)"
@@ -54,9 +68,20 @@ export class TableComponent implements AfterViewInit, OnChanges, OnInit {
   @Input()
   removeLink!: string;
 
+  @Input()
+  table_name!: string;
+
   @Input() columns!: string[];
-  @Input() datas: { key: string; values: string[]; checked: boolean }[] = [];
+  @Input() datas: {
+    key: string;
+    values: string[];
+    checked: boolean;
+  }[] = [];
   @Input() showFilterOfficial!: boolean;
+  @Input() showFilterStudent!: boolean;
+  @Input() showFilterStudentCip!: boolean;
+  @Input() showFilterStudentDiul!: boolean;
+
   @Input() information!: string;
   @Input() inOfficial!: boolean;
 
@@ -113,6 +138,15 @@ export class TableComponent implements AfterViewInit, OnChanges, OnInit {
   }
   filterOfficial() {
     this.showFilterOfficial = !this.showFilterOfficial;
+  }
+  filterStudent() {
+    this.showFilterStudent = !this.showFilterStudent;
+  }
+  filterStudentCip() {
+    this.showFilterStudentCip = !this.showFilterStudentCip;
+  }
+  filterStudentDiul() {
+    this.showFilterStudentDiul = !this.showFilterStudentDiul;
   }
 
   // Método para agrupar
@@ -203,5 +237,29 @@ export class TableComponent implements AfterViewInit, OnChanges, OnInit {
   }
   isDataAvailable(): boolean {
     return this.selectedItems.length > 0; // Devuelve true si hay datos
+  }
+
+  generatePDF() {
+    const doc = new jsPDF();
+    let y = 10; // Posición Y inicial
+    const pageHeight = doc.internal.pageSize.height;
+
+    this.datas.forEach((data) => {
+      const minLength = Math.min(this.columns.length, data.values.length);
+      for (let i = 0; i < minLength; i++) {
+        if (y + 10 > pageHeight) {
+          doc.addPage(); // Agregar nueva página
+          y = 10; // Reiniciar la posición Y
+        }
+
+        doc.text(`${this.columns[i]}: ${data.values[i]}`, 10, y);
+        y += 10; // Mover hacia abajo para el siguiente texto
+      }
+
+      y += 10; // Espacio entre diferentes items
+    });
+
+    // doc.text('Este es el contenido del archivo PDF que se generará', 10, 10);
+    doc.save('Datos ' + this.table_name + ' Sigies.pdf'); // Nombre del archivo a descargar
   }
 }

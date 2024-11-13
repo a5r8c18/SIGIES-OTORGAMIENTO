@@ -41,15 +41,21 @@ export class FilterOfficialComponent implements OnInit {
       officialName: new FormControl(),
       officialLastName: new FormControl(),
       officialPosition: new FormControl(),
-      officialAnnouncement: new FormControl(),
-      officialProcessing: new FormControl(),
+      convocation: new FormControl(),
+      prosecution: new FormControl(),
     });
   }
   get fc() {
     return this.officialForm.controls;
   }
   restore() {
-    window.location.reload();
+    // window.location.reload();
+    let officialsObservable: Observable<Official[]>;
+    officialsObservable = this.officialService.getAll();
+
+    officialsObservable.subscribe((officialService) => {
+      this.infoFetched.emit(officialService);
+    });
   }
   filter() {
     const isEmpty = Object.values(this.officialForm.value).every(
@@ -61,12 +67,13 @@ export class FilterOfficialComponent implements OnInit {
       officialsObservable = this.officialService.getAll();
     } else {
       const fv = this.officialForm.value;
-      const filters: unknown = {
+      const filters: Official = {
+        id: '',
         name: fv.officialName,
         lastname: fv.officialLastName,
         position: fv.officialPosition,
-        // Convocatoria
-        // Procesamiento
+        convocation: fv.convocation,
+        prosecution: fv.prosecution,
       };
       officialsObservable =
         this.officialService.getAllOfficialsBySearchTerm(filters);

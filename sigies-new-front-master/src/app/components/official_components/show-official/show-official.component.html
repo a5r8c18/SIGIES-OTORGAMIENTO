@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropdown d-flex justify-content-end mb-3">
   <button
     type="button"
     class="btn btn-primary dropdown-toggle"
@@ -25,11 +25,10 @@
     </li>
   </ul>
 </div>
-
 <ul class="list-group list-group-flush">
-  <li class="list-group-item">Funcionario</li>
-  <li class="list-group-item">Convocatoria: rellenar ni idea</li>
-  <li class="list-group-item">Procesamiento: rellenar ni idea</li>
+  <li class="list-group-item">Datos del Funcionario</li>
+  <li class="list-group-item">Convocatoria: {{ official.convocation }}</li>
+  <li class="list-group-item">Procesamiento: {{ official.prosecution }}</li>
   <li class="list-group-item">Nombre: {{ official.name }}</li>
   <li class="list-group-item">Apellidos: {{ official.lastname }}</li>
   <li class="list-group-item">Cargo: {{ official.position }}</li>

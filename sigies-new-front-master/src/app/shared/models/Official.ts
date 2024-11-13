@@ -1,7 +1,7 @@
 export class Official {
   id!: string;
   convocation!: string;
-  processing!: string;
+  prosecution!: string;
   name!: string;
   lastname!: string;
   position!: string;

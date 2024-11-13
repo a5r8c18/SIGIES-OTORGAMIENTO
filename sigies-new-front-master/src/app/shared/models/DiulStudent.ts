@@ -1,10 +1,10 @@
-import { Student } from './Student';
-
 export class DiulStudent {
   id!: string;
-  student!: Student;
-  type!: string[];
-  studentOf!: string;
+  ci_passport!: string;
+  student_type!: string;
   description!: string;
-  allOfficials!: boolean;
+  authorizing_officials!: boolean;
+  commission!: string;
+  id_official!: string;
+  student_of!: string;
 }

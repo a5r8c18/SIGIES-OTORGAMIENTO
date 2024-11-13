@@ -27,7 +27,7 @@ export class OfficialService {
     return this.http.get<Official[]>(OFFICIALS_URL);
   }
 
-  getAllOfficialsBySearchTerm(searchTerm: unknown): Observable<Official[]> {
+  getAllOfficialsBySearchTerm(searchTerm: Official): Observable<Official[]> {
     return this.http.post<Official[]>(OFFICIALS_BY_SEARCH_URL, searchTerm);
   }
   getAllOfficialsById(officialId: string): Observable<Official> {

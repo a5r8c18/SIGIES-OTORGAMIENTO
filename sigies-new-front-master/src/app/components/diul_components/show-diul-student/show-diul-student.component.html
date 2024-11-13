@@ -1,1 +1,67 @@
-<p>show-diul-student works!</p>
+<div class="dropdown">
+  <button
+    type="button"
+    class="btn btn-primary dropdown-toggle"
+    data-bs-toggle="dropdown"
+  >
+    Acciones
+  </button>
+  <ul class="dropdown-menu">
+    <li>
+      <button class="dropdown-item" (click)="includeStudent()">
+        Agregar nuevo
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item" (click)="modifyStudent(student.id)">
+        Editar
+      </button>
+    </li>
+    <li><hr class="dropdown-divider" /></li>
+    <li>
+      <button class="dropdown-item" (click)="studentList()">
+        Regresar al listado
+      </button>
+    </li>
+  </ul>
+</div>
+<span> Datos del estudiante: </span>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">CI/Pasaporte: {{ student.ci_passport }}</li>
+  <li class="list-group-item">Nombre: {{ student.name }}</li>
+  <li class="list-group-item">Apellidos: {{ student.lastname }}</li>
+  <li class="list-group-item">Dirección: {{ student.address }}</li>
+  <li class="list-group-item">Sexo: {{ student.gender }}</li>
+  <li class="list-group-item">País: {{ student.country }}</li>
+  <li class="list-group-item">
+    Tipo de estudiante: {{ student.student_type }}
+  </li>
+  <li class="list-group-item">
+    Preuniversitario: {{ student.pre_university }}
+  </li>
+  <li class="list-group-item">
+    Exámenes realizados: {{ student.entrance_exams }}
+  </li>
+  <li class="list-group-item">Escalafón: {{ student.grade_average }}</li>
+  <li class="list-group-item">
+    Índice académico: {{ student.academic_index }}
+  </li>
+  <li class="list-group-item">
+    Especialidad otorgada: {{ student.awarded_specialty }}
+  </li>
+  <li class="list-group-item">CES: {{ student.ces }}</li>
+  <li class="list-group-item">
+    Funcionario que autoriza: {{ student.official_name }}
+  </li>
+  <li class="list-group-item">
+    Derecho a beca: {{ student.scholarship_right ? 'Sí' : 'No' }}
+  </li>
+  <li class="list-group-item">
+    Autorización: {{ student.authorizing_officials ? 'Sí' : 'No' }}
+  </li>
+  <li class="list-group-item">Comisión: {{ student.commission }}</li>
+  <li class="list-group-item">Convocatoria: {{ student.convocation }}</li>
+  <li class="list-group-item">Descripción: {{ student.description }}</li>
+  <li class="list-group-item">Procesamiento: {{ student.prosecution }}</li>
+  <li class="list-group-item">Estudiante de*: {{ student.student_of }}</li>
+</ul>

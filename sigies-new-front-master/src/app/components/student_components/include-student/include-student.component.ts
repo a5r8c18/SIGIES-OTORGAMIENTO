@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -40,21 +41,62 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
   ) {}
   ngOnInit(): void {
     this.studentForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
-      lastname: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
-      ci_passport: ['', [Validators.required]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      lastname: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      ci_passport: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       awarded_specialty: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       address: ['', [Validators.required]],
-      foreign: ['', []],
-      country: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]],
+      isforeign: ['', []],
+      country: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
       pre_university: ['', [Validators.required]],
-      entrance_exams: ['', [Validators.required]],
+      entrance_exams: this.formBuilder.array([], [Validators.required]), // Cambiado a FormArray
       academic_index: ['', [Validators.required]],
       grade_average: ['', [Validators.required]],
       scholarship_right: ['', []],
       ces: ['', [Validators.required]],
     });
+  }
+
+  onCheckboxChange(e: any) {
+    const entranceExams: FormArray = this.studentForm.get(
+      'entrance_exams',
+    ) as FormArray;
+
+    if (e.target.checked) {
+      console.log('si ' + e.target.value);
+      entranceExams.push(this.formBuilder.control(e.target.value));
+    } else {
+      console.log('no ' + e.target.value);
+      const index = entranceExams.controls.findIndex(
+        (x) => x.value === e.target.value,
+      );
+      entranceExams.removeAt(index);
+    }
   }
 
   includeStudent() {
@@ -68,6 +110,19 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
     }
 
     const sv = this.studentForm.value;
+
+    if (!sv.isforeign) {
+      sv.isforeign = false;
+    }
+    if (!sv.scholarship_right) {
+      sv.scholarship_right = false;
+    }
+
+    // console.log(sv.entrance_exams               );
+    // console.log(sv.isforeign               );
+    // console.log(sv.gender               );
+    // console.log(sv.scholarship_right               );
+
     const student: Student = {
       authorization: '1',
       name: sv.name,
@@ -76,7 +131,7 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
       awarded_specialty: sv.awarded_specialty,
       gender: sv.gender,
       address: sv.address,
-      foreign: sv.foreign,
+      isforeign: sv.isforeign,
       country: sv.country,
       pre_university: sv.pre_university,
       entrance_exams: sv.entrance_exams,
@@ -107,17 +162,17 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
   //   this.isSubmitted = true;
   //   if (this.studentForm.invalid) return;
 
-  //   console.warn(this.studentForm.value);
-  //   this.includeStudent();
-  //   this.router.navigateByUrl('/assignment/grant/include-student');
+  //   console.warn(this.studentForm.value               );
+  //   this.includeStudent(               );
+  //   this.router.navigateByUrl('/assignment/grant/include-student'               );
   // }
   // includeStudentEnd(): void {
   //   this.isSubmitted = true;
   //   if (this.studentForm.invalid) return;
 
-  //   this.includeStudent();
-  //   console.warn(this.studentForm.value);
-  //   this.router.navigateByUrl('/assignment/grant/student');
+  //   this.includeStudent(               );
+  //   console.warn(this.studentForm.value               );
+  //   this.router.navigateByUrl('/assignment/grant/student'               );
   // }
 
   studentList(): void {

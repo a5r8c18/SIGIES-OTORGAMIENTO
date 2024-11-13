@@ -52,15 +52,48 @@ export class ModifyOfficialComponent implements OnInit, AfterViewInit {
     this.officialForm = this.formBuilder.group({
       officialName: [
         this.official?.name || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       officialLastName: [
         this.official?.lastname || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       officialPosition: [
         this.official?.position || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      convocation: [
+        this.official?.convocation || '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
+      ],
+      prosecution: [
+        this.official?.prosecution || '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
     });
   }
@@ -74,8 +107,8 @@ export class ModifyOfficialComponent implements OnInit, AfterViewInit {
     const fv = this.officialForm.value;
     const official: Official = {
       id: this.official.id,
-      convocation: '1',
-      processing: 'Procesamiento rellenar',
+      convocation: fv.convocation,
+      prosecution: fv.prosecution,
       name: fv.officialName,
       lastname: fv.officialLastName,
       position: fv.officialPosition,
@@ -99,7 +132,7 @@ export class ModifyOfficialComponent implements OnInit, AfterViewInit {
 
     console.warn(this.officialForm.value);
     this.modifyOfficial();
-    // window.location.reload();
+    // window.location.reload(               );
   }
   modifyOfficialEnd(): void {
     this.isSubmitted = true;

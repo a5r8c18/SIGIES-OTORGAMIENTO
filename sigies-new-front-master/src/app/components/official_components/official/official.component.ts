@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { TableComponent } from '../../table/table.component';
+import { Observable } from 'rxjs';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { Observable } from 'rxjs';
 // import { ActivatedRoute } from '@angular/router';
@@ -36,6 +37,7 @@ import { TableComponent } from '../../table/table.component';
       [modifyLink]="modifyLink"
       [removeLink]="removeLink"
       [inOfficial]="inOfficial"
+      [table_name]="table_name"
       (confirmed)="confirmHandleInfo($event)"
       (infoFetched)="handleInfo($event)"
     ></app-table>
@@ -46,6 +48,7 @@ export class OfficialComponent implements OnInit {
   showLink = '/assignment/grant/show-official/';
   modifyLink = '/assignment/grant/modify-official/';
   removeLink = '/assignment/grant/remove-official/';
+  table_name = 'Funcionarios';
 
   columns: string[] = [
     'Convocatoria',
@@ -60,16 +63,25 @@ export class OfficialComponent implements OnInit {
   officials: Official[] = [];
   selectedIds: string[] = [];
   information!: string;
-  datas: { key: string; values: string[]; checked: boolean }[] = [];
+  datas: {
+    key: string;
+    values: string[];
+    checked: boolean;
+  }[] = [];
 
   constructor(
     private officialService: OfficialService,
     private router: Router,
   ) {
     const officialsObservable = officialService.getAll();
+    this.formattedTable(officialsObservable);
+  }
+
+  formattedTable(officialsObservable: Observable<Official[]>): void {
     officialsObservable.subscribe((serverOfficials) => {
       this.officials = serverOfficials;
       this.datas = this.formattedOfficials;
+      // console.log(this.datas);
     });
   }
 
@@ -78,7 +90,7 @@ export class OfficialComponent implements OnInit {
       key: official.id, // Puedes usar cualquier propiedad como clave
       values: [
         official.convocation,
-        official.processing,
+        official.prosecution,
         official.name,
         official.lastname,
         official.position,
@@ -96,7 +108,7 @@ export class OfficialComponent implements OnInit {
       this.officials = serverOfficial;
       this.datas = this.formattedOfficials;
     });
-    this.information = 'Eliminacion realizada con éxito!';
+    this.information = 'Eliminación realizada con éxito!';
   }
 
   removeOfficialsSelected() {
@@ -108,11 +120,12 @@ export class OfficialComponent implements OnInit {
         this.officials = serverOfficial;
         this.datas = this.formattedOfficials;
       });
-    this.information = 'Eliminacion por cantidad realizada con éxito!';
+    this.information = 'Eliminación por lote realizada con éxito!';
   }
 
   handleInfo(receivedInfo: Official[]) {
     this.officials = receivedInfo; // Guarda la información recibida
+    this.datas = this.formattedOfficials;
   }
   confirmHandleInfo(data: {
     confirm: boolean;
@@ -123,7 +136,7 @@ export class OfficialComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'eliminar') {
         this.removeOfficialById(data.selectKey);
-      } else if (data.action === 'eliminar por cantidad') {
+      } else if (data.action === 'eliminar por lote') {
         this.selectedIds = data.selectKeys;
         this.removeOfficialsSelected();
       }

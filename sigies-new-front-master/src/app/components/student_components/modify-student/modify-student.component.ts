@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -23,6 +24,8 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
   studentForm!: FormGroup;
   isSubmitted = false;
 
+  entranceExams: string[] = [];
+
   mensaje: string = '';
   mostrarMensaje: boolean = false;
   constructor(
@@ -35,6 +38,29 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
     this.loadStudentData();
     this.initializeForm();
   }
+
+  onCheckboxChange(e: any) {
+    const entranceExams: FormArray = this.studentForm.get(
+      'entrance_exams',
+    ) as FormArray;
+
+    if (e.target.checked) {
+      console.log('si ' + e.target.value);
+      entranceExams.push(this.formBuilder.control(e.target.value));
+    } else {
+      console.log('no ' + e.target.value);
+      const index = entranceExams.controls.findIndex(
+        (x) => x.value === e.target.value,
+      );
+      entranceExams.removeAt(index);
+    }
+  }
+
+  // Función para verificar si un examen está en entranceExams
+  // isExamSelected(exam: string): boolean {
+  //   const entranceExams = this.student?.entrance_exams;
+  //   return entranceExams.includes(exam               );
+  // }
 
   loadStudentData() {
     this.activatedRoute.params.subscribe((params) => {
@@ -52,32 +78,50 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
     this.studentForm = this.formBuilder.group({
       name: [
         this.student?.name || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       lastname: [
         this.student?.lastname || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
-      ci_passport: [this.student?.ci_passport || '', [Validators.required]],
+      ci_passport: [
+        this.student?.ci_passport || '',
+        [Validators.required, Validators.pattern(/^\d{11}$/)],
+      ],
       awarded_specialty: [
         this.student?.awarded_specialty || '',
         [Validators.required],
       ],
       gender: [this.student?.gender || '', [Validators.required]],
       address: [this.student?.address || '', [Validators.required]],
-      foreign: [this.student?.foreign || '', []],
+      isforeign: [this.student?.isforeign || '', []],
       country: [
         this.student?.country || '',
-        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
+          ),
+        ],
       ],
       pre_university: [
         this.student?.pre_university || '',
         [Validators.required],
       ],
-      entrance_exams: [
-        this.student?.entrance_exams || '',
+      entrance_exams: this.formBuilder.array(
+        this.student?.entrance_exams || [],
         [Validators.required],
-      ],
+      ),
       academic_index: [
         this.student?.academic_index || '',
         [Validators.required],
@@ -86,6 +130,7 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
       scholarship_right: [this.student?.scholarship_right || '', []],
       ces: [this.student?.ces || '', [Validators.required]],
     });
+    this.entranceExams = this.studentForm.value.entrance_exams;
   }
 
   modifyStudent() {
@@ -96,6 +141,14 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
     }
 
     const sv = this.studentForm.value;
+
+    if (!sv.isforeign) {
+      sv.isforeign = false;
+    }
+    if (!sv.scholarship_right) {
+      sv.scholarship_right = false;
+    }
+
     const student: Student = {
       authorization: '1',
       name: sv.name,
@@ -104,7 +157,7 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
       awarded_specialty: sv.awarded_specialty,
       gender: sv.gender,
       address: sv.address,
-      foreign: sv.foreign,
+      isforeign: sv.isforeign,
       country: sv.country,
       pre_university: sv.pre_university,
       entrance_exams: sv.entrance_exams,

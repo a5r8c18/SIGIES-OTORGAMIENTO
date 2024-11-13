@@ -1,1 +1,158 @@
-<p>modify-diul-student works!</p>
+<div class="form-body">
+  <div class="row">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <h3>Registra al Estudiante</h3>
+          <p>Rellena los datos a continuación</p>
+          <form
+            class="requires-validation"
+            [formGroup]="studentDiulForm"
+            (ngSubmit)="modifyStudent()"
+            novalidate
+          >
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Estudiante SIES-3*</h6></span>
+              <select
+                class="form-select mt-3"
+                formControlName="ci_passport"
+                required
+              >
+                <option selected disabled value="">Estudiante:</option>
+                <option
+                  *ngFor="let student of students"
+                  [value]="student.ci_passport"
+                >
+                  {{ student.name }}
+                </option>
+              </select>
+              <div class="valid-feedback">Campo seleccionado</div>
+              <div class="invalid-feedback">
+                Tiene que seleccionar un estudiante
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Funcionario*</h6></span>
+              <select
+                class="form-select mt-3"
+                formControlName="id_official"
+                required
+              >
+                <option selected disabled value="">Funcionario:</option>
+                <option
+                  *ngFor="let official of officials"
+                  [value]="official.id"
+                >
+                  {{ official.name }}
+                </option>
+              </select>
+              <div class="valid-feedback">Campo seleccionado</div>
+              <div class="invalid-feedback">
+                Tiene que seleccionar un funcionario
+              </div>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                formControlName="authorizing_officials"
+                type="checkbox"
+                value=""
+                id="invalidCheck"
+              />
+              <label class="form-check-label" for="authorizing_officials"
+                >Funcionarios que autorizan</label
+              >
+            </div>
+
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Descripción</h6></span>
+              <textarea
+                class="form-control"
+                type="text"
+                name="description"
+                formControlName="description"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                rows="4"
+              ></textarea>
+              <div class="valid-feedback">Campo Descripción correcto</div>
+              <div class="invalid-feedback">
+                El campo descripción no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Tipo de Estudiante*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="student_type"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                required
+              />
+              <div class="valid-feedback">Campo Tipo de Estudiante relleno</div>
+              <div class="invalid-feedback">
+                El campo Tipo de Estudiante no debe estar en blanco ni tener
+                números o caracteres especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Alumno(a) de*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="student_of"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                required
+              />
+              <div class="valid-feedback">Campo Estudiante de* relleno</div>
+              <div class="invalid-feedback">
+                El campo Estudiante de* no debe estar en blanco ni tener números
+                o caracteres especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Comisíon*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="commission"
+                placeholder=""
+                title="Solo se permiten letras"
+                pattern="[A-Za-z]+"
+                required
+              />
+              <div class="valid-feedback">Campo Comisíon relleno</div>
+              <div class="invalid-feedback">
+                El campo Comisíon no debe estar en blanco ni tener caracteres
+                especiales.
+              </div>
+            </div>
+
+            <div class="form-button mt-3">
+              <button (click)="studentList()" class="btn btn-primary">
+                Cancelar
+              </button>
+
+              <button
+                (click)="modifyStudent()"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Aceptar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

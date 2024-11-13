@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
     //   .pipe(first())
     //   .subscribe(
     //     () => {
-    //       this.router.navigate([this.returnUrl]);
+    //       this.router.navigate([this.returnUrl]               );
     //     },
     //     (error) => {
     //       if (error === 'Unauthorized') {
@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit {
 
     //       // this.error = error;
 
-    //       this.loadingSpinner.hide();
+    //       this.loadingSpinner.hide(               );
     //     },
-    //   );
+    //                  );
   }
 }

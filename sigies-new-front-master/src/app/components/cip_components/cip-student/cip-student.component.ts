@@ -2,8 +2,12 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentCipService } from 'src/app/services/student-cip.service';
-import { CipStudent } from 'src/app/shared/models/CipStudent';
 import { TableComponent } from '../../table/table.component';
+import { OfficialService } from 'src/app/services/official.service';
+import { Official } from 'src/app/shared/models/Official';
+import { StudentService } from 'src/app/services/student.service';
+import { Student } from 'src/app/shared/models/Student';
+import { CombinedData } from 'src/app/shared/models/CombinedData';
 
 @Component({
   selector: 'app-cip-student',
@@ -20,6 +24,7 @@ import { TableComponent } from '../../table/table.component';
       [showLink]="showLink"
       [modifyLink]="modifyLink"
       [removeLink]="removeLink"
+      [table_name]="table_name"
       (confirmed)="confirmHandleInfo($event)"
       (infoFetched)="handleInfo($event)"
     ></app-table>
@@ -30,6 +35,7 @@ export class CipStudentComponent implements OnInit {
   showLink = '/assignment/grant/show-cip-student/';
   modifyLink = '/assignment/grant/modify-cip-student/';
   removeLink = '/assignment/grant/remove-cip-student/';
+  table_name = 'Estudiantes Cip';
 
   columns: string[] = [
     'Comisión',
@@ -37,58 +43,78 @@ export class CipStudentComponent implements OnInit {
     'Procesamiento',
     'Autorización',
     'Funcionario que autoriza',
-    'Carné de identidad',
+    'CI/Pasaporte',
     'Nombre(s)',
     'Apellidos',
     'Carrera',
     'Acciones',
   ];
 
-  studentsCip: CipStudent[] = [];
+  studentsCip: CombinedData[] = [];
+  official!: Official;
+  student!: Student;
   selectIds: string[] = [];
   information!: string;
-  datas: { key: string; values: string[]; checked: boolean }[] = [];
+  datas: {
+    key: string;
+    values: string[];
+    checked: boolean;
+  }[] = [];
 
   constructor(
     private studentCipService: StudentCipService,
     private router: Router,
-  ) {
-    const studentsObservable = studentCipService.getAll();
+    private officialService: OfficialService,
+    private studentService: StudentService,
+  ) {}
+  ngOnInit(): void {
+    const studentsObservable = this.studentCipService.getAll();
     studentsObservable.subscribe((studentCipService) => {
       this.studentsCip = studentCipService;
       this.datas = this.formattedStudents;
     });
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
   get formattedStudents() {
+    if (!this.studentsCip || this.studentsCip.length === 0) {
+      return []; // Retorna un arreglo vacío si no hay estudiantes
+    }
+
     return this.studentsCip.map((studentCip) => ({
       key: studentCip.id, // Puedes usar cualquier propiedad como clave
-      student: studentCip.student,
       values: [
-        'Averiguar',
-        'Averiguar',
-        'Averiguar',
-        studentCip.student.authorization,
-        'Averiguar',
-        studentCip.student.ci_passport,
-        studentCip.student.name,
-        studentCip.student.lastname,
-        studentCip.student.awarded_specialty,
+        studentCip.commission,
+        studentCip.convocation,
+        studentCip.prosecution,
+        this.changeBoolean(studentCip.authorizing_officials),
+        studentCip.official_name,
+        studentCip.ci_passport,
+        studentCip.name,
+        studentCip.lastname,
+        studentCip.awarded_specialty,
       ],
       checked: false,
     }));
   }
+  changeBoolean(authorizing_officials: boolean): string {
+    if (authorizing_officials) {
+      return 'Si';
+    }
+    return 'No';
+  }
+  checkAuthorizing(authorizing_officials: boolean): string {
+    if (authorizing_officials) {
+      return 'Si';
+    }
+    return 'No';
+  }
 
-  removeStudentByCi(ci_passport: string) {
-    this.studentCipService
-      .removeByCi(ci_passport)
-      .subscribe((studentCipService) => {
-        this.studentsCip = studentCipService;
-        this.datas = this.formattedStudents;
-      });
-    this.information = 'Eliminacion realizada con éxito!';
+  removeStudentByCi(id: string) {
+    console.log(id);
+    this.studentCipService.removeByCi(id).subscribe((studentCipService) => {
+      this.studentsCip = studentCipService;
+      this.datas = this.formattedStudents;
+    });
+    this.information = 'Eliminación realizada con éxito!';
   }
 
   removeStudentsSelected() {
@@ -100,11 +126,12 @@ export class CipStudentComponent implements OnInit {
         this.studentsCip = studentService;
         this.datas = this.formattedStudents;
       });
-    this.information = 'Eliminacion por cantidad realizada con éxito!';
+    this.information = 'Eliminación por lote realizada con éxito!';
   }
 
-  handleInfo(receivedInfo: CipStudent[]) {
+  handleInfo(receivedInfo: CombinedData[]) {
     this.studentsCip = receivedInfo; // Guarda la información recibida
+    this.datas = this.formattedStudents;
   }
   confirmHandleInfo(data: {
     confirm: boolean;
@@ -115,7 +142,7 @@ export class CipStudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'eliminar') {
         this.removeStudentByCi(data.selectKey);
-      } else if (data.action === 'eliminar por cantidad') {
+      } else if (data.action === 'eliminar por lote') {
         this.selectIds = data.selectKeys;
         this.removeStudentsSelected();
       }

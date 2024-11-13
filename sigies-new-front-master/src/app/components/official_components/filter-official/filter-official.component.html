@@ -1,8 +1,8 @@
 <form [formGroup]="officialForm">
-  <button class="primary" title="Export Selected">
+  <!-- <button class="primary" title="Export Selected">
     <span>Exportar</span>
-  </button>
-  <div class="form-group input-group mb-3">
+  </button> -->
+  <!-- <div class="form-group input-group mb-3">
     <div class="input-group-prepend">
       <label class="input-group-text" for="inputGroupSelect01"
         >Convocatoria</label
@@ -10,7 +10,7 @@
     </div>
     <select
       class="custom-select"
-      formControlName="officialAnnouncement"
+      formControlName="convocation"
       class="form-control"
       id="inputGroupSelect01"
     >
@@ -19,6 +19,20 @@
       <option value="2">Two</option>
       <option value="3">Three</option>
     </select>
+  </div> -->
+  <div class="form-group input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01"
+        >Convocatoria</label
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="convocation"
+    />
   </div>
   <div class="form-group input-group mb-3">
     <div class="input-group-prepend">
@@ -26,17 +40,13 @@
         >Procesamiento</label
       >
     </div>
-    <select
-      class="custom-select"
-      formControlName="officialProcessing"
+    <input
+      type="text"
       class="form-control"
-      id="inputGroupSelect01"
-    >
-      <option selected>Choose...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="prosecution"
+    />
   </div>
   <div class="form-group input-group input-group-sm mb-3">
     <div class="input-group-prepend">
@@ -75,11 +85,19 @@
     />
   </div>
   <div class="button-container">
-    <button (click)="filter()" type="submit" title="Delete Selected">
-      <span>Filtrar</span>
+    <button class="effect" (click)="filter()" type="submit" title="Filtrar">
+      <div class="text">
+        <img
+          src="../../../assets/search.svg"
+          viewBox="0 0 448 512"
+          width="16"
+          title="filter-alt"
+          alt="Filtrar"
+        />Filtrar
+      </div>
     </button>
-    <button (click)="restore()" title="Delete Selected">
-      <span>Restablecer</span>
+    <button class="effect" (click)="restore()" title="Restablecer">
+      <div class="text">Restablecer</div>
     </button>
   </div>
 </form>

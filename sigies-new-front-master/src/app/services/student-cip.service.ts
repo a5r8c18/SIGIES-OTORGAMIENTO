@@ -11,6 +11,7 @@ import {
   CIP_STUDENTS_REMOVE_URL,
   CIP_STUDENTS_URL,
 } from '../shared/constants/urls';
+import { CombinedData } from '../shared/models/CombinedData';
 
 @Injectable({
   providedIn: 'root',
@@ -22,32 +23,35 @@ export class StudentCipService {
   constructor(private http: HttpClient) {
     this.studentObservable = this.studentSubject.asObservable();
   }
-  getAll(): Observable<CipStudent[]> {
-    return this.http.get<CipStudent[]>(CIP_STUDENTS_URL);
+  getAll(): Observable<CombinedData[]> {
+    return this.http.get<CombinedData[]>(CIP_STUDENTS_URL);
   }
 
-  getAllStudentsBySearchTerm(searchTerm: unknown): Observable<CipStudent[]> {
-    return this.http.post<CipStudent[]>(CIP_STUDENTS_BY_SEARCH_URL, searchTerm);
+  getAllStudentsBySearchTerm(searchTerm: unknown): Observable<CombinedData[]> {
+    return this.http.post<CombinedData[]>(
+      CIP_STUDENTS_BY_SEARCH_URL,
+      searchTerm,
+    );
   }
-  getAllStudentsByCi(ci_passport: string): Observable<CipStudent> {
-    return this.http.get<CipStudent>(CIP_STUDENTS_BY_CI_URL + ci_passport);
-  }
-
-  include(student: CipStudent): Observable<CipStudent[]> {
-    return this.http.post<CipStudent[]>(CIP_STUDENTS_INCLUDE_URL, student);
-  }
-
-  removeByCi(id: string): Observable<CipStudent[]> {
-    return this.http.delete<CipStudent[]>(CIP_STUDENTS_REMOVE_URL + id);
+  getAllStudentsById(id: string): Observable<CombinedData> {
+    return this.http.get<CombinedData>(CIP_STUDENTS_BY_CI_URL + id);
   }
 
-  removeAllCheck(ci_passport: string[]): Observable<CipStudent[]> {
-    return this.http.delete<CipStudent[]>(CIP_STUDENTS_REMOVE_BY_CHECK_URL, {
-      body: { studentsCipCheck: ci_passport },
+  include(student: CipStudent): Observable<CombinedData[]> {
+    return this.http.post<CombinedData[]>(CIP_STUDENTS_INCLUDE_URL, student);
+  }
+
+  removeByCi(id: string): Observable<CombinedData[]> {
+    return this.http.delete<CombinedData[]>(CIP_STUDENTS_REMOVE_URL + id);
+  }
+
+  removeAllCheck(id: string[]): Observable<CombinedData[]> {
+    return this.http.delete<CombinedData[]>(CIP_STUDENTS_REMOVE_BY_CHECK_URL, {
+      body: { studentsCipCheck: id },
     });
   }
 
-  modify(student: CipStudent): Observable<CipStudent> {
-    return this.http.put<CipStudent>(CIP_STUDENTS_MODIFY_URL, student);
+  modify(student: CipStudent): Observable<CombinedData[]> {
+    return this.http.put<CombinedData[]>(CIP_STUDENTS_MODIFY_URL, student);
   }
 }

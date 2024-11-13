@@ -11,6 +11,7 @@ import {
   DIUL_STUDENTS_REMOVE_URL,
   DIUL_STUDENTS_URL,
 } from '../shared/constants/urls';
+import { CombinedData } from '../shared/models/CombinedData';
 
 @Injectable({
   providedIn: 'root',
@@ -22,35 +23,35 @@ export class StudentDiulService {
   constructor(private http: HttpClient) {
     this.studentObservable = this.studentSubject.asObservable();
   }
-  getAll(): Observable<DiulStudent[]> {
-    return this.http.get<DiulStudent[]>(DIUL_STUDENTS_URL);
+  getAll(): Observable<CombinedData[]> {
+    return this.http.get<CombinedData[]>(DIUL_STUDENTS_URL);
   }
 
-  getAllStudentsBySearchTerm(searchTerm: unknown): Observable<DiulStudent[]> {
-    return this.http.post<DiulStudent[]>(
+  getAllStudentsBySearchTerm(searchTerm: unknown): Observable<CombinedData[]> {
+    return this.http.post<CombinedData[]>(
       DIUL_STUDENTS_BY_SEARCH_URL,
       searchTerm,
     );
   }
-  getAllStudentsByCi(ci_passport: string): Observable<DiulStudent> {
-    return this.http.get<DiulStudent>(DIUL_STUDENTS_BY_CI_URL + ci_passport);
+  getAllStudentsById(id: string): Observable<CombinedData> {
+    return this.http.get<CombinedData>(DIUL_STUDENTS_BY_CI_URL + id);
   }
 
-  include(student: DiulStudent): Observable<DiulStudent[]> {
-    return this.http.post<DiulStudent[]>(DIUL_STUDENTS_INCLUDE_URL, student);
+  include(student: DiulStudent): Observable<CombinedData[]> {
+    return this.http.post<CombinedData[]>(DIUL_STUDENTS_INCLUDE_URL, student);
   }
 
-  removeByCi(id: string): Observable<DiulStudent[]> {
-    return this.http.delete<DiulStudent[]>(DIUL_STUDENTS_REMOVE_URL + id);
+  removeByCi(id: string): Observable<CombinedData[]> {
+    return this.http.delete<CombinedData[]>(DIUL_STUDENTS_REMOVE_URL + id);
   }
 
-  removeAllCheck(ci_passport: string[]): Observable<DiulStudent[]> {
-    return this.http.delete<DiulStudent[]>(DIUL_STUDENTS_REMOVE_BY_CHECK_URL, {
-      body: { studentsDiulCheck: ci_passport },
+  removeAllCheck(id: string[]): Observable<CombinedData[]> {
+    return this.http.delete<CombinedData[]>(DIUL_STUDENTS_REMOVE_BY_CHECK_URL, {
+      body: { studentsCipCheck: id },
     });
   }
 
-  modify(student: DiulStudent): Observable<DiulStudent> {
-    return this.http.put<DiulStudent>(DIUL_STUDENTS_MODIFY_URL, student);
+  modify(student: DiulStudent): Observable<CombinedData[]> {
+    return this.http.put<CombinedData[]>(DIUL_STUDENTS_MODIFY_URL, student);
   }
 }

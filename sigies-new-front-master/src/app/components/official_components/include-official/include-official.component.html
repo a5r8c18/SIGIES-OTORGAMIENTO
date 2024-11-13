@@ -4,7 +4,7 @@
       <div class="form-content">
         <div class="form-items">
           <h3>Registra al Funcionario</h3>
-          <p>Rellena los datos a continuacion</p>
+          <p>Rellena los datos a continuación</p>
           <div *ngIf="mostrarMensaje" class="alert alert-success" role="alert">
             {{ mensaje }}
           </div>
@@ -13,58 +13,95 @@
             [formGroup]="officialForm"
             novalidate
           >
+            <!-- placeholder="Nombre completo" -->
             <div class="col-md-12">
+              <span style="color: azure"><h6>Nombre*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="officialName"
-                placeholder="Nombre completo"
-                pattern="[A-Za-z]+"
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 title="Solo se permiten letras"
                 required
               />
-              <div class="valid-feedback">Campo nombre relleno</div>
+              <div class="valid-feedback">Campo Nombre relleno</div>
               <div class="invalid-feedback">
-                El nombre del funcionario no debe estar en blanco ni tener
-                numeros o caracteres especiales.
+                El Nombre del funcionario no debe estar en blanco ni tener
+                números o caracteres especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Apellidos*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="officialLastName"
-                placeholder="Apellidos"
-                pattern="(?=.*[A-Za-z])[A-Za-z\s]+"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 required
               />
               <div class="text-danger error-message" style="display: none">
                 Solo se permiten letras.
               </div>
-              <div class="valid-feedback">Campo apellido relleno</div>
+              <div class="valid-feedback">Campo Apellido relleno</div>
               <div class="invalid-feedback">
-                El apellido del funcionario no debe estar en blanco ni tener
-                numeros o caracteres especiales.
+                El Apellido del funcionario no debe estar en blanco ni tener
+                números o caracteres especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Cargo*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="officialPosition"
-                placeholder="Cargo"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+                required
+              />
+              <div class="valid-feedback">Campo Cargo relleno</div>
+              <div class="invalid-feedback">
+                El Cargo no debe estar en blanco ni tener números o caracteres
+                especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Procesamiento*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="prosecution"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+                required
+              />
+              <div class="valid-feedback">Campo Procesamiento relleno</div>
+              <div class="invalid-feedback">
+                El Procesamiento no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Convocatoria*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="convocation"
+                placeholder=""
                 pattern="[A-Za-z]+"
                 required
               />
-              <div class="valid-feedback">Campo cargo relleno</div>
+              <div class="valid-feedback">Campo Convocatoria relleno</div>
               <div class="invalid-feedback">
-                El apellido del funcionario no debe estar en blanco ni tener
-                numeros o caracteres especiales.
+                La Convocatoria no debe estar en blanco ni tener números o
+                caracteres especiales.
               </div>
             </div>
             <div class="form-button mt-3">

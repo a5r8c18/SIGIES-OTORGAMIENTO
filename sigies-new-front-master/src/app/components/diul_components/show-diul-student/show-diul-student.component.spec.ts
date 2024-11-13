@@ -8,10 +8,9 @@ describe('ShowDiulStudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowDiulStudentComponent]
-    })
-    .compileComponents();
-    
+      imports: [ShowDiulStudentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShowDiulStudentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

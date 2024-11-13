@@ -1,10 +1,9 @@
-import { Student } from './Student';
-
 export class CipStudent {
   id!: string;
-  student!: Student;
-  type!: string[];
+  ci_passport!: string;
+  student_type!: string;
   description!: string;
-  allOfficials!: boolean;
-  // notas examenes entrance_exams!: string[];
+  authorizing_officials!: boolean;
+  commission!: string;
+  id_official!: string;
 }

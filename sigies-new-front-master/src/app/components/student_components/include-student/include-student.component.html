@@ -4,7 +4,7 @@
       <div class="form-content">
         <div class="form-items">
           <h3>Registra al Estudiante</h3>
-          <p>Rellena los datos a continuacion</p>
+          <p>Rellena los datos a continuación</p>
           <form
             class="requires-validation"
             [formGroup]="studentForm"
@@ -12,20 +12,24 @@
             novalidate
           >
             <div class="col-md-12">
-              <select
-                class="form-select mt-3"
+              <span style="color: azure"><h6>Preuniversitario*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
                 formControlName="pre_university"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+                title="Solo se permiten letras"
                 required
-              >
-                <option selected disabled value="">Preuniversitario</option>
-                <option value="jweb">Junior Web Developer</option>
-                <option value="sweb">Senior Web Developer</option>
-                <option value="pmanager">Project Manager</option>
-              </select>
-              <div class="valid-feedback">You selected a position!</div>
-              <div class="invalid-feedback">Please select a position!</div>
+              />
+              <div class="valid-feedback">Campo Preuniversitario relleno</div>
+              <div class="invalid-feedback">
+                El Preuniversitario no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
             </div>
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <select
                 class="form-select mt-3"
                 formControlName="entrance_exams"
@@ -38,65 +42,84 @@
               </select>
               <div class="valid-feedback">You selected a position!</div>
               <div class="invalid-feedback">Please select a position!</div>
+            </div> -->
+            <span style="color: azure"><h6>Exámenes realizados:</h6></span>
+            <div
+              class="form-check"
+              *ngFor="let exam of ['Matemática', 'Español', 'Historia']"
+            >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [value]="exam"
+                (change)="onCheckboxChange($event)"
+                [id]="exam"
+              />
+              <label class="form-check-label" [for]="exam">
+                {{ exam }}
+              </label>
             </div>
-
+            <span style="color: azure"><h5>Estudiante Extranjero:</h5></span>
             <div class="form-check">
               <input
                 class="form-check-input"
-                formControlName="foreign"
+                formControlName="isforeign"
                 type="checkbox"
                 value=""
                 id="invalidCheck"
               />
-              <label class="form-check-label" for="foreign"
-                >Estudiante Extranjero</label
+              <label class="form-check-label" for="isforeign"
+                >Marcar si lo es</label
               >
-              <div class="invalid-feedback">
+              <!-- <div class="invalid-feedback">
                 Please confirm that the entered data are all correct!
-              </div>
+              </div> -->
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>País*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="country"
-                placeholder="Pais"
-                pattern="[A-Za-z]+"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 required
               />
-              <div class="valid-feedback">Campo pais relleno</div>
+              <div class="valid-feedback">Campo país relleno</div>
               <div class="invalid-feedback">
-                El campo pais no debe estar en blanco ni tener numeros o
+                El campo país no debe estar en blanco ni tener números o
                 caracteres especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Escalafón*</h6></span>
               <input
                 class="form-control"
                 type="number"
                 name="name"
                 formControlName="grade_average"
-                placeholder="Escalafón"
+                placeholder=""
                 required
               />
-              <div class="valid-feedback">Campo escalafon relleno</div>
+              <div class="valid-feedback">Campo escalafón relleno</div>
               <div class="invalid-feedback">
-                El campo escalafon no debe estar en blanco ni tener numeros o
+                El campo escalafón no debe estar en blanco ni tener números o
                 caracteres especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>CI/Pasaporte*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="ci_passport"
-                placeholder="Carnet de identidad o Pasaporte"
-                title="Solo se permiten letras"
+                placeholder=""
+                pattern="^\d{11}$"
                 required
               />
               <div class="valid-feedback">
@@ -104,36 +127,38 @@
               </div>
               <div class="invalid-feedback">
                 El campo Carnet de identidad o Pasaporte no debe estar en blanco
-                ni tener caracteres especiales.
+                ni tener caracteres especiales. Debe constar de 11 dígitos.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Nombre*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="name"
-                placeholder="Nombre completo"
-                pattern="[A-Za-z]+"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 title="Solo se permiten letras"
                 required
               />
               <div class="valid-feedback">Campo nombre relleno</div>
               <div class="invalid-feedback">
-                El nombre no debe estar en blanco ni tener numeros o caracteres
+                El nombre no debe estar en blanco ni tener números o caracteres
                 especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Apellidos*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="lastname"
-                placeholder="Apellidos"
-                pattern="(?=.*[A-Za-z])[A-Za-z\s]+"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 required
               />
               <div class="text-danger error-message" style="display: none">
@@ -141,27 +166,29 @@
               </div>
               <div class="valid-feedback">Campo apellido relleno</div>
               <div class="invalid-feedback">
-                El apellido no debe estar en blanco ni tener numeros o
+                El apellido no debe estar en blanco ni tener números o
                 caracteres especiales.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Dirección*</h6></span>
               <input
                 class="form-control"
                 type="text"
                 name="name"
                 formControlName="address"
-                placeholder="Direccion"
+                placeholder=""
                 required
               />
-              <div class="valid-feedback">Campo apellido relleno</div>
+              <div class="valid-feedback">Campo Dirección relleno</div>
               <div class="invalid-feedback">
-                Direccion no debe estar en blanco.
+                Dirección no debe estar en blanco.
               </div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Género*</h6></span>
               <select
                 class="form-select mt-3"
                 formControlName="gender"
@@ -171,17 +198,18 @@
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
               </select>
-              <div class="valid-feedback">You selected a position!</div>
-              <div class="invalid-feedback">Please select a position!</div>
+              <div class="valid-feedback">Se ha realizado la elección</div>
+              <div class="invalid-feedback">Debe seleccionar una opción.</div>
             </div>
 
             <div class="col-md-12">
+              <span style="color: azure"><h6>Índice académico*</h6></span>
               <input
                 class="form-control"
                 type="number"
                 name="name"
                 formControlName="academic_index"
-                placeholder="Índice académico"
+                placeholder=""
                 required
               />
               <div class="valid-feedback">Campo Índice académico relleno</div>
@@ -192,29 +220,40 @@
             </div>
 
             <div class="col-md-12">
-              <select
-                class="form-select mt-3"
+              <span style="color: azure"><h6>Especialidad otorgada*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
                 formControlName="awarded_specialty"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                title="Solo se permiten letras"
                 required
-              >
-                <option selected disabled value="">
-                  Especialidad otorgada
-                </option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-              </select>
-              <div class="valid-feedback">You selected a position!</div>
-              <div class="invalid-feedback">Please select a position!</div>
+              />
+              <div class="valid-feedback">Campo especialidad relleno</div>
+              <div class="invalid-feedback">
+                La especialidad no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
             </div>
-
             <div class="col-md-12">
-              <select class="form-select mt-3" formControlName="ces" required>
-                <option selected disabled value="">CES</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-              </select>
-              <div class="valid-feedback">You selected a position!</div>
-              <div class="invalid-feedback">Please select a position!</div>
+              <span style="color: azure"><h6>CES*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="ces"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                title="Solo se permiten letras"
+                required
+              />
+              <div class="valid-feedback">Campo ces relleno</div>
+              <div class="invalid-feedback">
+                El ces no debe estar en blanco ni tener números o caracteres
+                especiales.
+              </div>
             </div>
             <div class="form-check">
               <input
@@ -227,9 +266,6 @@
               <label class="form-check-label" for="foreign"
                 >Derecho a la beca</label
               >
-              <div class="invalid-feedback">
-                Please confirm that the entered data are all correct!
-              </div>
             </div>
 
             <div class="form-button mt-3">

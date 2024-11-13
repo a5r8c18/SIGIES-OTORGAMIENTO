@@ -6,9 +6,10 @@ export class Student {
   awarded_specialty!: string;
   gender!: string;
   address!: string;
-  foreign!: boolean;
+  isforeign!: boolean;
   country!: string;
   pre_university!: string;
+  // entrance_exams!: { subject: string; grade: number }[];
   entrance_exams!: string[];
   academic_index!: number;
   grade_average!: number;

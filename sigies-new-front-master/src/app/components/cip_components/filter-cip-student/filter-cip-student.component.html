@@ -1,34 +1,13 @@
 <form [formGroup]="cipStudentForm">
-  <button class="primary" title="Export Selected">
-    <span>Exportar</span>
-  </button>
   <div class="form-group input-group mb-3">
     <div class="input-group-prepend">
       <label class="input-group-text" for="inputGroupSelect01"
-        >Convocatoria</label
+        >Especialidad Otorgada</label
       >
     </div>
     <select
       class="custom-select"
-      formControlName="officialAnnouncement"
-      class="form-control"
-      id="inputGroupSelect01"
-    >
-      <option selected>Choose...</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
-  </div>
-  <div class="form-group input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="inputGroupSelect01"
-        >Procesamiento</label
-      >
-    </div>
-    <select
-      class="custom-select"
-      formControlName="officialProcessing"
+      formControlName="awarded_specialty"
       class="form-control"
       id="inputGroupSelect01"
     >
@@ -40,6 +19,33 @@
   </div>
   <div class="form-group input-group input-group-sm mb-3">
     <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Comisión</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="commission"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm"
+        >Convocación</span
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="convocation"
+    />
+  </div>
+
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
       <span class="input-group-text" id="inputGroup-sizing-sm">Nombre(s)</span>
     </div>
     <input
@@ -47,7 +53,7 @@
       class="form-control"
       aria-label="Small"
       aria-describedby="inputGroup-sizing-sm"
-      formControlName="officialName"
+      formControlName="name"
     />
   </div>
   <div class="form-group input-group input-group-sm mb-3">
@@ -59,27 +65,78 @@
       class="form-control"
       aria-label="Small"
       aria-describedby="inputGroup-sizing-sm"
-      formControlName="officialLastName"
+      formControlName="lastname"
     />
   </div>
   <div class="form-group input-group input-group-sm mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-sm">Cargo</span>
+      <span class="input-group-text" id="inputGroup-sizing-sm"
+        >CI Pasaporte:</span
+      >
     </div>
     <input
       type="text"
       class="form-control"
       aria-label="Small"
       aria-describedby="inputGroup-sizing-sm"
-      formControlName="officialPosition"
+      formControlName="ci_passport"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm"
+        >Procesamiento:</span
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="prosecution"
+    />
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      formControlName="authorizing_officials"
+      type="checkbox"
+      value=""
+      id="invalidCheck"
+    />
+    <label for="authorizing_officials"
+      >Autorización funcionarios si o no:</label
+    >
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm"
+        >Nombre del Funcionario que autoriza:</span
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="official_name"
     />
   </div>
   <div class="button-container">
-    <button (click)="filter()" type="submit" title="Delete Selected">
-      <span>Filtrar</span>
+    <button class="effect" (click)="filter()" type="submit" title="Filtrar">
+      <div class="text">
+        <img
+          src="../../../assets/search.svg"
+          viewBox="0 0 448 512"
+          width="16"
+          title="filter-alt"
+          alt="Filtrar"
+        />Filtrar
+      </div>
     </button>
-    <button (click)="restore()" title="Delete Selected">
-      <span>Restablecer</span>
+    <button class="effect" (click)="restore()" title="Restablecer">
+      <div class="text">Restablecer</div>
     </button>
   </div>
 </form>

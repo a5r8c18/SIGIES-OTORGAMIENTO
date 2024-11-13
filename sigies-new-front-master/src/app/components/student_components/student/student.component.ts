@@ -20,6 +20,7 @@ import { TableComponent } from '../../table/table.component';
       [showLink]="showLink"
       [modifyLink]="modifyLink"
       [removeLink]="removeLink"
+      [table_name]="table_name"
       (confirmed)="confirmHandleInfo($event)"
       (infoFetched)="handleInfo($event)"
     ></app-table>
@@ -30,10 +31,11 @@ export class StudentComponent implements OnInit {
   showLink = '/assignment/grant/show-student/';
   modifyLink = '/assignment/grant/modify-student/';
   removeLink = '/assignment/grant/remove-student/';
+  table_name = 'Estudiantes';
 
   columns: string[] = [
     'Autorización',
-    'Carnet de identidad',
+    'CI/Pasaporte',
     'Nombre(s)',
     'Apellidos',
     'Carrera',
@@ -43,7 +45,11 @@ export class StudentComponent implements OnInit {
   students: Student[] = [];
   selectCiPassports: string[] = [];
   information!: string;
-  datas: { key: string; values: string[]; checked: boolean }[] = [];
+  datas: {
+    key: string;
+    values: string[];
+    checked: boolean;
+  }[] = [];
 
   constructor(
     private studentService: StudentService,
@@ -62,7 +68,8 @@ export class StudentComponent implements OnInit {
     return this.students.map((student) => ({
       key: student.ci_passport, // Puedes usar cualquier propiedad como clave
       values: [
-        student.authorization,
+        // student.authorization,
+        'Autorizo del Estudiante',
         student.ci_passport,
         student.name,
         student.lastname,
@@ -77,7 +84,7 @@ export class StudentComponent implements OnInit {
       this.students = studentService;
       this.datas = this.formattedStudents;
     });
-    this.information = 'Eliminacion realizada con éxito!';
+    this.information = 'Eliminación realizada con éxito!';
   }
 
   removeStudentsSelected() {
@@ -89,11 +96,12 @@ export class StudentComponent implements OnInit {
         this.students = studentService;
         this.datas = this.formattedStudents;
       });
-    this.information = 'Eliminacion por cantidad realizada con éxito!';
+    this.information = 'Eliminación por lote realizada con éxito!';
   }
 
   handleInfo(receivedInfo: Student[]) {
     this.students = receivedInfo; // Guarda la información recibida
+    this.datas = this.formattedStudents;
   }
   confirmHandleInfo(data: {
     confirm: boolean;
@@ -104,7 +112,7 @@ export class StudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'eliminar') {
         this.removeStudentByCi(data.selectKey);
-      } else if (data.action === 'eliminar por cantidad') {
+      } else if (data.action === 'eliminar por lote') {
         this.selectCiPassports = data.selectKeys;
         this.removeStudentsSelected();
       }

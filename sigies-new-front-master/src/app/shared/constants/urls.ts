@@ -20,7 +20,7 @@ export const STUDENTS_REMOVE_BY_CHECK_URL =
 
 export const DIUL_STUDENTS_URL = BASE_URL + '/api/diul-student';
 export const DIUL_STUDENTS_BY_SEARCH_URL = DIUL_STUDENTS_URL + '/';
-export const DIUL_STUDENTS_BY_CI_URL = DIUL_STUDENTS_URL + '/student/';
+export const DIUL_STUDENTS_BY_CI_URL = DIUL_STUDENTS_URL + '/id/';
 export const DIUL_STUDENTS_INCLUDE_URL = BASE_URL + '/api/include-diul-student';
 export const DIUL_STUDENTS_MODIFY_URL = BASE_URL + '/api/modify-diul-student';
 export const DIUL_STUDENTS_REMOVE_URL =
@@ -30,7 +30,7 @@ export const DIUL_STUDENTS_REMOVE_BY_CHECK_URL =
 
 export const CIP_STUDENTS_URL = BASE_URL + '/api/cip-student';
 export const CIP_STUDENTS_BY_SEARCH_URL = CIP_STUDENTS_URL + '/';
-export const CIP_STUDENTS_BY_CI_URL = CIP_STUDENTS_URL + '/student/';
+export const CIP_STUDENTS_BY_CI_URL = CIP_STUDENTS_URL + '/id/';
 export const CIP_STUDENTS_INCLUDE_URL = BASE_URL + '/api/include-cip-student';
 export const CIP_STUDENTS_MODIFY_URL = BASE_URL + '/api/modify-cip-student';
 export const CIP_STUDENTS_REMOVE_URL =

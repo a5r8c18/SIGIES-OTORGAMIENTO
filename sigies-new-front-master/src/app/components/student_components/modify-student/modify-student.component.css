@@ -7,10 +7,20 @@
   min-height: 100vh;
 }
 
-.form-content{
-    width: 100%;
+.form-control {
+  margin-top: 0 !important;
+}
+.col-md-12 {
+  margin-bottom: 16px !important;
 }
 
+.form-content {
+  width: 100%;
+}
+button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .form-holder .form-content {
   position: relative;
   text-align: center;
@@ -68,10 +78,10 @@
   color: #fff;
 }
 
-.form-content input[type="text"],
-.form-content input[type="password"],
-.form-content input[type="email"],
-.form-content input[type="number"],
+.form-content input[type='text'],
+.form-content input[type='password'],
+.form-content input[type='email'],
+.form-content input[type='number'],
 .form-content select {
   width: 100%;
   padding: 9px 20px;

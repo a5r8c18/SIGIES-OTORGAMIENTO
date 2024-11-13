@@ -45,7 +45,7 @@ export class AuthenticationService {
         /*,
         mapTo(true),
         catchError(error => {
-          return of(false);
+          return of(false               );
         })*/
       );
   }
@@ -62,9 +62,9 @@ export class AuthenticationService {
       }),
       mapTo(true),
       catchError(error => {
-        alert(error.error);
-        return of(false);
-      }));*/
+        alert(error.error               );
+        return of(false               );
+      })               );*/
   }
 
   isLoggedIn() {
@@ -169,23 +169,23 @@ export class AuthenticationService {
          // login successful if there's a jwt token in the response
          if (user && user.access) {
            // store user details and jwt token in local storage to keep user logged in between page refreshes
-           sessionStorage.setItem('userToken', JSON.stringify(user));
+           sessionStorage.setItem('userToken', JSON.stringify(user)               );
 
-           // var decoded = jwt_decode(user.access);
-           // console.log("USER-ID: " + decoded['user_id']);
+           // var decoded = jwt_decode(user.access               );
+           // console.log("USER-ID: " + decoded['user_id']               );
            let user_data = jwt_decode(user.access)
-           sessionStorage.setItem('userData', JSON.stringify(user_data));
+           sessionStorage.setItem('userData', JSON.stringify(user_data)               );
            // user.name = user_data.name
            // console.log(user_data)
 
-           this.currentUserSubject.next(user);
+           this.currentUserSubject.next(user               );
 
            // add user permissions
-           this.permissions.setPermissions();
+           this.permissions.setPermissions(               );
          }
 
          return user;
-       }));
+       })               );
    }*/
 
   /*refresh(req: HttpRequest<any>, next: HttpHandler) {
@@ -198,31 +198,31 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (user && user.access) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          const userStore: User = JSON.parse(sessionStorage.getItem("userToken"));
+          const userStore: User = JSON.parse(sessionStorage.getItem("userToken")               );
           userStore.access = user.access;
-          sessionStorage.setItem("userToken", JSON.stringify(userStore));
-          // console.log(JSON.parse(sessionStorage.getItem("userToken"))["refresh"]);
+          sessionStorage.setItem("userToken", JSON.stringify(userStore)               );
+          // console.log(JSON.parse(sessionStorage.getItem("userToken"))["refresh"]               );
 
-          // console.log(userStore.access);
+          // console.log(userStore.access               );
 
-          this.currentUserSubject.next(userStore);
+          this.currentUserSubject.next(userStore               );
 
           // add user permissions
-          this.permissions.setPermissions();
+          this.permissions.setPermissions(               );
 
         }
 
         return user;
-      }));
+      })               );
   }
 */
   /*logout() {
     // remove user from local storage to log user out
-    sessionStorage.removeItem('userToken');
-    sessionStorage.removeItem('userData');
-    this.currentUserSubject.next(null);
+    sessionStorage.removeItem('userToken'               );
+    sessionStorage.removeItem('userData'               );
+    this.currentUserSubject.next(null               );
 
     // remove user permissions
-    this.permissions.flushPermissions();
+    this.permissions.flushPermissions(               );
   }*/
 }

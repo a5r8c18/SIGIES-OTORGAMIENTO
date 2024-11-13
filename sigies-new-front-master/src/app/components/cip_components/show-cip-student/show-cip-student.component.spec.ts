@@ -8,10 +8,9 @@ describe('ShowCipStudentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowCipStudentComponent]
-    })
-    .compileComponents();
-    
+      imports: [ShowCipStudentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShowCipStudentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

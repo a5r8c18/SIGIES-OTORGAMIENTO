@@ -2,8 +2,13 @@ import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentDiulService } from 'src/app/services/student-diul.service';
-import { DiulStudent } from 'src/app/shared/models/DiulStudent';
+// import { DiulStudent } from 'src/app/shared/models/DiulStudent';
 import { TableComponent } from '../../table/table.component';
+import { Official } from 'src/app/shared/models/Official';
+import { OfficialService } from 'src/app/services/official.service';
+import { StudentService } from 'src/app/services/student.service';
+import { Student } from 'src/app/shared/models/Student';
+import { CombinedData } from 'src/app/shared/models/CombinedData';
 
 @Component({
   selector: 'app-diul-student',
@@ -20,6 +25,7 @@ import { TableComponent } from '../../table/table.component';
       [showLink]="showLink"
       [modifyLink]="modifyLink"
       [removeLink]="removeLink"
+      [table_name]="table_name"
       (confirmed)="confirmHandleInfo($event)"
       (infoFetched)="handleInfo($event)"
     ></app-table>
@@ -30,6 +36,7 @@ export class DiulStudentComponent implements OnInit {
   showLink = '/assignment/grant/show-diul-student/';
   modifyLink = '/assignment/grant/modify-diul-student/';
   removeLink = '/assignment/grant/remove-diul-student/';
+  table_name = 'Estudiantes Diul';
 
   columns: string[] = [
     'Comisión',
@@ -37,58 +44,78 @@ export class DiulStudentComponent implements OnInit {
     'Procesamiento',
     'Autorización',
     'Funcionario que autoriza',
-    'Carné de identidad',
+    'CI/Pasaporte',
     'Nombre(s)',
     'Apellidos',
     'Carrera',
     'Acciones',
   ];
 
-  studentsDiul: DiulStudent[] = [];
+  studentsDiul: CombinedData[] = [];
+  official!: Official;
+  student!: Student;
   selectIds: string[] = [];
   information!: string;
-  datas: { key: string; values: string[]; checked: boolean }[] = [];
+  datas: {
+    key: string;
+    values: string[];
+    checked: boolean;
+  }[] = [];
 
   constructor(
     private studentDiulService: StudentDiulService,
     private router: Router,
-  ) {
-    const studentsObservable = studentDiulService.getAll();
+    private officialService: OfficialService,
+    private studentService: StudentService,
+  ) {}
+  ngOnInit(): void {
+    const studentsObservable = this.studentDiulService.getAll();
     studentsObservable.subscribe((studentDiulService) => {
       this.studentsDiul = studentDiulService;
       this.datas = this.formattedStudents;
     });
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
   get formattedStudents() {
-    return this.studentsDiul.map((studentDiul) => ({
-      key: studentDiul.id, // Puedes usar cualquier propiedad como clave
-      student: studentDiul.student,
+    if (!this.studentsDiul || this.studentsDiul.length === 0) {
+      return []; // Retorna un arreglo vacío si no hay estudiantes
+    }
+
+    return this.studentsDiul.map((studentCip) => ({
+      key: studentCip.id, // Puedes usar cualquier propiedad como clave
       values: [
-        'Averiguar',
-        'Averiguar',
-        'Averiguar',
-        studentDiul.student.authorization,
-        'Averiguar',
-        studentDiul.student.ci_passport,
-        studentDiul.student.name,
-        studentDiul.student.lastname,
-        studentDiul.student.awarded_specialty,
+        studentCip.commission,
+        studentCip.convocation,
+        studentCip.prosecution,
+        this.changeBoolean(studentCip.authorizing_officials),
+        studentCip.official_name,
+        studentCip.ci_passport,
+        studentCip.name,
+        studentCip.lastname,
+        studentCip.awarded_specialty,
       ],
       checked: false,
     }));
   }
+  changeBoolean(authorizing_officials: boolean): string {
+    if (authorizing_officials) {
+      return 'Si';
+    }
+    return 'No';
+  }
+  checkAuthorizing(authorizing_officials: boolean): string {
+    if (authorizing_officials) {
+      return 'Si';
+    }
+    return 'No';
+  }
 
-  removeStudentByCi(ci_passport: string) {
-    this.studentDiulService
-      .removeByCi(ci_passport)
-      .subscribe((studentDiulService) => {
-        this.studentsDiul = studentDiulService;
-        this.datas = this.formattedStudents;
-      });
-    this.information = 'Eliminacion realizada con éxito!';
+  removeStudentByCi(id: string) {
+    console.log(id);
+    this.studentDiulService.removeByCi(id).subscribe((studentDiulService) => {
+      this.studentsDiul = studentDiulService;
+      this.datas = this.formattedStudents;
+    });
+    this.information = 'Eliminación realizada con éxito!';
   }
 
   removeStudentsSelected() {
@@ -96,15 +123,16 @@ export class DiulStudentComponent implements OnInit {
 
     this.studentDiulService
       .removeAllCheck(this.selectIds)
-      .subscribe((studentDiulService) => {
-        this.studentsDiul = studentDiulService;
+      .subscribe((studentService) => {
+        this.studentsDiul = studentService;
         this.datas = this.formattedStudents;
       });
-    this.information = 'Eliminacion por cantidad realizada con éxito!';
+    this.information = 'Eliminación por lote realizada con éxito!';
   }
 
-  handleInfo(receivedInfo: DiulStudent[]) {
+  handleInfo(receivedInfo: CombinedData[]) {
     this.studentsDiul = receivedInfo; // Guarda la información recibida
+    this.datas = this.formattedStudents;
   }
   confirmHandleInfo(data: {
     confirm: boolean;
@@ -115,7 +143,7 @@ export class DiulStudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'eliminar') {
         this.removeStudentByCi(data.selectKey);
-      } else if (data.action === 'eliminar por cantidad') {
+      } else if (data.action === 'eliminar por lote') {
         this.selectIds = data.selectKeys;
         this.removeStudentsSelected();
       }

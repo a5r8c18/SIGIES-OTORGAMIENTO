@@ -27,7 +27,7 @@ export class FormErrorService {
   getErrors(form, error) {
     console.log(this.errors);
 
-    // form.get('name').setErrors({'incorrect': true});
+    // form.get('name').setErrors({'incorrect': true}               );
 
     if (error === 'Unknown Error') {
       this.message.error(

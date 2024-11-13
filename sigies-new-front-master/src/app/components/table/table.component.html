@@ -7,48 +7,113 @@
 ></app-confirm-dialog>
 <div class="card">
   <div class="table-title">
-    <h2>Listados de funcionarios de SIES-3</h2>
+    <h2>Listados {{ table_name }} SIES-3</h2>
   </div>
+
   <div *ngIf="showFilterOfficial">
     <app-filter-official
       (infoFetched)="handleInfo($event)"
     ></app-filter-official>
   </div>
+  <div *ngIf="showFilterStudent">
+    <app-filter-student (infoFetched)="handleInfo($event)"></app-filter-student>
+  </div>
+
+  <div *ngIf="showFilterStudentDiul">
+    <app-filter-diul-student
+      (infoFetched)="handleInfo($event)"
+    ></app-filter-diul-student>
+  </div>
+  <div *ngIf="showFilterStudentCip">
+    <app-filter-cip-student
+      (infoFetched)="handleInfo($event)"
+    ></app-filter-cip-student>
+  </div>
 
   <div class="button-container">
-    <div *ngIf="inOfficial">
-      <button (click)="filterOfficial()" title="Delete Selected">
-        <span>Filtros</span>
+    <div *ngIf="table_name === 'Funcionarios'">
+      <button class="effect" (click)="filterOfficial()" title="Filtros">
+        <div class="filter">
+          <img
+            src="../../../assets/filter.svg"
+            viewBox="0 0 448 512"
+            width="16"
+            title="filter-alt"
+            alt="Filtrar"
+          />Filtros
+        </div>
       </button>
     </div>
-    <button
+    <div *ngIf="table_name === 'Estudiantes Cip'">
+      <button class="effect" (click)="filterStudentCip()" title="Filtros">
+        <div class="filter">
+          <img
+            src="../../../assets/filter.svg"
+            viewBox="0 0 448 512"
+            width="16"
+            title="filter-alt"
+            alt="Filtrar"
+          />Filtros
+        </div>
+      </button>
+    </div>
+    <div *ngIf="table_name === 'Estudiantes Diul'">
+      <button class="effect" (click)="filterStudentDiul()" title="Filtros">
+        <div class="filter">
+          <img
+            src="../../../assets/filter.svg"
+            viewBox="0 0 448 512"
+            width="16"
+            title="filter-alt"
+            alt="Filtrar"
+          />Filtros
+        </div>
+      </button>
+    </div>
+    <div *ngIf="table_name === 'Estudiantes'">
+      <button class="effect" (click)="filterStudent()" title="Filtros">
+        <div class="filter">
+          <img
+            src="../../../assets/filter.svg"
+            viewBox="0 0 448 512"
+            width="16"
+            title="filter-alt"
+            alt="Filtrar"
+          />Filtros
+        </div>
+      </button>
+    </div>
+
+    <!-- <button
       *ngIf="isDataAvailable()"
       data-bs-toggle="modal"
       data-bs-target="#myModal"
       class="danger"
       (click)="confirmAction('eliminar por cantidad', '-1')"
-      title="Delete Selected"
+      title="Eliminar por Lote"
     >
       <svg viewBox="0 0 448 512" width="16" title="trash-alt">
         <path
           d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
         ></path>
       </svg>
-    </button>
+    </button> -->
 
-    <button class="primary" (click)="include()" title="Add New Data">
-      <!-- <svg viewBox="0 0 512 512" width="16" title="plus-circle">
-        <path
-          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
-        ></path>
-      </svg> -->
-      <span>Agregar nuevo</span>
+    <button class="insert effectBlue" (click)="include()" title="Insertar">
+      <div>
+        <svg viewBox="0 0 512 512" width="16" title="plus-circle">
+          <path
+            d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+          ></path>
+        </svg>
+        Agregar nuevo
+      </div>
     </button>
   </div>
   <div *ngIf="mostrarMensaje" class="alert alert-success" role="alert">
     {{ mensaje }}
   </div>
-  <div class="table-concept">
+  <div class="table-concept size">
     <input
       class="table-radio"
       type="radio"
@@ -57,11 +122,11 @@
       checked="checked"
     />
     <div class="table-display">
-      Mostrando de 1 a {{ selectedValue }} de {{ datas.length }} funcionarios en
-      total
+      Mostrando de 1 a {{ selectedValue }} de {{ datas.length }}
+      {{ table_name }} en total
 
-      <div class="col-md-12">
-        <span>Selección catidad de elementos por pagina: </span>
+      <!-- <div class="col-md-12">
+        <span>Selección catidad de elementos por página: </span>
         <select
           class="mt-3"
           [(ngModel)]="selectedValue"
@@ -73,7 +138,7 @@
           <option value="128">128</option>
           <option value="192">192</option>
         </select>
-      </div>
+      </div> -->
     </div>
     <table>
       <thead>
@@ -115,25 +180,53 @@
             {{ value }}
           </td>
           <td>
-            <button class="primary" (click)="show(data.key)" title="Show Data">
-              <span>Mostrar</span>
+            <button
+              class="primary effect"
+              (click)="show(data.key)"
+              title="Mostrar"
+            >
+              <div class="filter">
+                <img
+                  src="../../../assets/search.svg"
+                  viewBox="0 0 448 512"
+                  width="16"
+                  title="show-alt"
+                  alt="Mostrar"
+                />Mostrar
+              </div>
             </button>
             <button
-              class="primary"
+              class="primary effect"
               (click)="modify(data.key)"
-              title="Edit Data"
+              title="Modificar"
             >
-              <span>Editar</span>
+              <div>
+                <img
+                  src="../../../assets/pencil.svg"
+                  viewBox="0 0 448 512"
+                  width="16"
+                  title="edit-alt"
+                  alt="Modificar"
+                />
+                Editar
+              </div>
             </button>
             <button
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#myModal"
-              class="danger"
+              class="danger effect"
               (click)="confirmAction('eliminar', data.key)"
-              title="Delete Selected"
+              title="Eliminar"
             >
-              <span>Eliminar</span>
+              <div>
+                <svg viewBox="0 0 448 512" width="16" title="trash-alt">
+                  <path
+                    d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                  ></path>
+                </svg>
+                Eliminar
+              </div>
             </button>
           </td>
         </tr>
@@ -171,43 +264,72 @@
       >
     </div>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <div class="input-group-text">
-          <input
-            type="checkbox"
-            id="selectAll"
-            aria-label="Checkbox for following text input"
-            onchange="toggleCheckboxes(this)"
-          />
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div class="d-flex">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input
+                type="checkbox"
+                id="selectAll"
+                aria-label="Checkbox for following text input"
+                onchange="toggleCheckboxes(this)"
+              />
 
-          <span>Todos los elementos(#total)</span>
+              <span>Todos los elementos(#total)</span>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="input-group-text">
+        <span>Selección cantidad de elementos por página: </span>
+        <select
+          [(ngModel)]="selectedValue"
+          (ngModelChange)="onSelectChange($event)"
+        >
+          <option value="16">16</option>
+          <option value="32">32</option>
+          <option value="64">64</option>
+          <option value="128">128</option>
+          <option value="192">192</option>
+        </select>
+      </div>
     </div>
+
     <button
       *ngIf="isDataAvailable()"
       data-bs-toggle="modal"
       data-bs-target="#myModal"
-      class="danger"
-      (click)="confirmAction('eliminar por cantidad', '-1')"
-      title="Delete Selected"
+      class="danger effect"
+      (click)="confirmAction('eliminar por lote', '-1')"
+      title="Eliminar por Lote"
     >
-      <span>Eliminar</span>
+      <div>
+        <svg viewBox="0 0 448 512" width="16" title="trash-alt">
+          <path
+            d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+          ></path>
+        </svg>
+        Eliminar
+      </div>
     </button>
     <button
+      class="disabled"
       *ngIf="!isDataAvailable()"
-      class="danger"
-      title="No hay datos disponibles"
+      title="No hay elementos seleccionados"
       disabled
     >
       <span>Eliminar</span>
     </button>
 
-    <button class="primary" title="Accept Selected">
+    <!-- <button class="primary" title="Accept Selected">
       <span>Aceptar</span>
-    </button>
-    <button class="primary" title="Export Selected">
+    </button> -->
+    <button
+      class="primary effect"
+      title="Exportar Datos"
+      (click)="generatePDF()"
+    >
       <span>Exportar</span>
     </button>
   </div>
