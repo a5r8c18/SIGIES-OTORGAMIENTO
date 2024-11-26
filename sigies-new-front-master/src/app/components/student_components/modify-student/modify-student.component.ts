@@ -93,8 +93,14 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
             /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
           ),
         ],
+<<<<<<< HEAD
+=======
       ],
-      ci_passport: [this.student?.ci_passport || '', [Validators.required]],
+      ci_passport: [
+        this.student?.ci_passport || '',
+        [Validators.required, Validators.pattern(/^\d{11}$/)],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
+      ],
       awarded_specialty: [
         this.student?.awarded_specialty || '',
         [
@@ -122,6 +128,10 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
       ],
       entrance_exams: this.formBuilder.array(
         this.student?.entrance_exams || [],
+<<<<<<< HEAD
+=======
+        [Validators.required],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       ),
       academic_index: [
         this.student?.academic_index || '',
@@ -139,7 +149,10 @@ export class ModifyStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
     });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
     this.entranceExams = this.studentForm.value.entrance_exams;
   }
 

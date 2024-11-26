@@ -64,6 +64,7 @@ export class IncludeDiulStudentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.studentDiulForm = this.formBuilder.group({
+<<<<<<< HEAD
       ci_passport: ['', [Validators.required]],
       student_type: [
         '',
@@ -75,6 +76,14 @@ export class IncludeDiulStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
       description: [''],
+=======
+      ci_passport: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      student_type: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      description: ['', [Validators.pattern(/^[a-zA-Z ]+$/)]],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       authorizing_officials: ['', []],
       commission: [
         '',
@@ -83,12 +92,16 @@ export class IncludeDiulStudentComponent implements OnInit, AfterViewInit {
       id_official: ['', [Validators.required]],
       student_of: [
         '',
+<<<<<<< HEAD
         [
           Validators.required,
           Validators.pattern(
             /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
           ),
         ],
+=======
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       ],
     });
   }

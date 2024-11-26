@@ -76,6 +76,7 @@ export class ModifyDiulStudentComponent implements OnInit, AfterViewInit {
       ci_passport: [this.diulStudent?.ci_passport || '', [Validators.required]],
       student_type: [
         this.diulStudent?.student_type || '',
+<<<<<<< HEAD
         [
           Validators.required,
           Validators.pattern(
@@ -84,6 +85,14 @@ export class ModifyDiulStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
       description: [this.diulStudent?.description || ''],
+=======
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      description: [
+        this.diulStudent?.description || '',
+        [Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       authorizing_officials: [
         this.diulStudent?.authorizing_officials || '',
         [],
@@ -93,12 +102,16 @@ export class ModifyDiulStudentComponent implements OnInit, AfterViewInit {
         [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
       ],
       id_official: [this.diulStudent?.id_official || '', [Validators.required]],
+<<<<<<< HEAD
       student_of: [
         this.diulStudent?.student_of || '',
         Validators.pattern(
           /^(?! )[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/,
         ),
       ],
+=======
+      student_of: [this.diulStudent?.student_of || '', [Validators.required]],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
     });
   }
 

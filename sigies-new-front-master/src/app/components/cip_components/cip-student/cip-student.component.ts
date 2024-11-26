@@ -113,9 +113,14 @@ export class CipStudentComponent implements OnInit {
     this.studentCipService.removeByCi(id).subscribe((studentCipService) => {
       this.studentsCip = studentCipService;
       this.datas = this.formattedStudents;
+<<<<<<< HEAD
       this.router.navigateByUrl('/assignment/grant/cip-student');
       this.information = 'Eliminación realizada con éxito!';
     });
+=======
+    });
+    this.information = 'Eliminación realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   removeStudentsSelected() {
@@ -129,6 +134,10 @@ export class CipStudentComponent implements OnInit {
         this.router.navigateByUrl('/assignment/grant/cip-student');
         this.information = 'Eliminación realizada con éxito!';
       });
+<<<<<<< HEAD
+=======
+    this.information = 'Eliminación por lote realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   handleInfo(receivedInfo: CombinedData[]) {
@@ -144,7 +153,11 @@ export class CipStudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'Eliminar') {
         this.removeStudentByCi(data.selectKey);
+<<<<<<< HEAD
       } else if (data.action === 'Eliminar por lote') {
+=======
+      } else if (data.action === 'eliminar por lote') {
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
         this.selectIds = data.selectKeys;
         this.removeStudentsSelected();
       }

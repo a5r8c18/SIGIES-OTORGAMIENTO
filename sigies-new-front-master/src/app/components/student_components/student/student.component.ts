@@ -86,6 +86,10 @@ export class StudentComponent implements OnInit {
       this.information = 'Eliminación realizada con éxito!';
       this.router.navigateByUrl('/assignment/grant/student');
     });
+<<<<<<< HEAD
+=======
+    this.information = 'Eliminación realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   removeStudentsSelected() {
@@ -99,7 +103,11 @@ export class StudentComponent implements OnInit {
 
         this.router.navigateByUrl('/assignment/grant/student');
       });
+<<<<<<< HEAD
     this.information = 'Eliminación realizada con éxito!';
+=======
+    this.information = 'Eliminación por lote realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   handleInfo(receivedInfo: Student[]) {
@@ -115,7 +123,11 @@ export class StudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'Eliminar') {
         this.removeStudentByCi(data.selectKey);
+<<<<<<< HEAD
       } else if (data.action === 'Eliminar por lote') {
+=======
+      } else if (data.action === 'eliminar por lote') {
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
         this.selectCiPassports = data.selectKeys;
         this.removeStudentsSelected();
       }

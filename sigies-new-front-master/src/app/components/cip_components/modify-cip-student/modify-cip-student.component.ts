@@ -76,6 +76,7 @@ export class ModifyCipStudentComponent implements OnInit, AfterViewInit {
       ci_passport: [this.cipStudent?.ci_passport || '', [Validators.required]],
       student_type: [
         this.cipStudent?.student_type || '',
+<<<<<<< HEAD
         [
           Validators.required,
           Validators.pattern(
@@ -84,6 +85,14 @@ export class ModifyCipStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
       description: [this.cipStudent?.description || ''],
+=======
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      description: [
+        this.cipStudent?.description || '',
+        [Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       authorizing_officials: [this.cipStudent?.authorizing_officials || '', []],
       commission: [
         this.cipStudent?.commission || '',

@@ -64,6 +64,7 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.studentCipForm = this.formBuilder.group({
+<<<<<<< HEAD
       ci_passport: ['', [Validators.required]],
       student_type: [
         '',
@@ -75,6 +76,14 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
       description: [''],
+=======
+      ci_passport: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      student_type: [
+        '',
+        [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)],
+      ],
+      description: ['', [Validators.pattern(/^[a-zA-Z ]+$/)]],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       authorizing_officials: ['', []],
       commission: [
         '',
@@ -121,12 +130,21 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
     this.mostrarMensaje = true;
 
     // Ocultar el mensaje después de 3 segundos
+<<<<<<< HEAD
     // setTimeout(() => {
     //   this.mostrarMensaje = false;
     // }, 3000);
     // this.router.navigateByUrl('/assignment/grant/cip-student', {
     //   state: { data: this.mensaje },
     // });
+=======
+    setTimeout(() => {
+      this.mostrarMensaje = false;
+    }, 3000);
+    this.router.navigateByUrl('/assignment/grant/cip-student', {
+      state: { data: this.mensaje },
+    });
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   // includeStudentContinue() {
@@ -148,8 +166,11 @@ export class IncludeCipStudentComponent implements OnInit, AfterViewInit {
 
   includeStudentCipEnd(): void {
     this.isSubmitted = true;
+<<<<<<< HEAD
     console.log('ggggggggggggg');
     console.log('aaaaaaaa');
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
     if (this.studentCipForm.invalid) return;
     console.log('ggggggggggggg');
     this.includeStudent();

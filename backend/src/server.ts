@@ -24,7 +24,11 @@ app.get("/api/official", async (req: Request, res: Response) => {
       `SELECT id, name, lastname, "position", prosecution, convocation
 	FROM pkt_grant.official`
     );
+<<<<<<< HEAD
     res.send(result.rows.reverse());
+=======
+    res.send(result.rows);
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   } catch (error) {
     console.error(error);
     res.status(500).send("Error en la consulta");
@@ -202,7 +206,11 @@ app.get("/api/student", async (req, res) => {
       `SELECT name, lastname, ci_passport, awarded_specialty, gender, address, isforeign, country, pre_university, academic_index, grade_average, scholarship_right, ces
 	FROM pkt_grant.student;`
     );
+<<<<<<< HEAD
     res.send(result.rows.reverse());
+=======
+    res.send(result.rows);
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   } catch (error) {
     console.error(error);
     res.status(500).send("Error en la consulta");
@@ -262,6 +270,10 @@ app.post("/api/include-student", (req, res) => {
     ces,
     entrance_exams,
   } = req.body;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   // Consulta para insertar un nuevo estudiante
   const studentQuery = `
   INSERT INTO pkt_grant.student(
@@ -290,12 +302,22 @@ app.post("/api/include-student", (req, res) => {
   db.query(studentQuery, values)
     .then((result) => {
       const newCiPassport = result.rows[0].ci_passport; // Obtener el ci_passport del nuevo estudiante
+<<<<<<< HEAD
       // (name, points, student_ci_passport)
       // Preparar la consulta para insertar los exámenes
       const examsQuery = `
       INSERT INTO pkt_grant.entrance_exams (name, student_ci_passport)
       VALUES ($1, $2);
     `;
+=======
+
+      // Preparar la consulta para insertar los exámenes
+      const examsQuery = `
+      INSERT INTO pkt_grant.entrance_exams (name, points, student_ci_passport)(name, student_ci_passport)
+      VALUES ($1, $2               );
+    `;
+
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       // Insertar cada examen en la tabla entrance_exams
       const examPromises = entrance_exams.map((exam: any) => {
         return db.query(examsQuery, [exam, newCiPassport]);
@@ -313,7 +335,10 @@ app.post("/api/include-student", (req, res) => {
 
 //Modificar estudiante
 app.put("/api/modify-student", (req, res) => {
+<<<<<<< HEAD
   console.log(req.body);
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   const {
     name,
     lastname,
@@ -329,12 +354,16 @@ app.put("/api/modify-student", (req, res) => {
     scholarship_right,
     ces,
     entrance_exams,
+<<<<<<< HEAD
     old_ci_passport,
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   } = req.body;
 
   const studentQuery = `
     UPDATE pkt_grant.student
 	SET name=$1, lastname=$2, ci_passport=$3, awarded_specialty=$4, gender=$5, address=$6, isforeign=$7, country=$8, pre_university=$9, academic_index=$10, grade_average=$11, scholarship_right=$12, ces=$13
+<<<<<<< HEAD
 	WHERE ci_passport = $14;
   `;
 
@@ -343,6 +372,12 @@ app.put("/api/modify-student", (req, res) => {
       WHERE student_ci_passport = $1;
   `;
 
+=======
+	WHERE ci_passport = $3
+  RETURNING ci_passport;
+  `;
+
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   const values = [
     name,
     lastname,
@@ -357,6 +392,7 @@ app.put("/api/modify-student", (req, res) => {
     grade_average,
     scholarship_right,
     ces,
+<<<<<<< HEAD
     old_ci_passport,
   ];
   // Ejecutar la consulta para insertar el estudiante
@@ -364,13 +400,49 @@ app.put("/api/modify-student", (req, res) => {
     .then((result) => {
       // Eliminar los exámenes existentes
       return db.query(studentQuery, values);
+=======
+  ];
+
+  // Ejecutar la consulta para insertar el estudiante
+  db.query(studentQuery, values)
+    .then((result) => {
+      const updatedCiPassport = result.rows[0].ci_passport; // Obtener el ci_passport del nuevo estudiante
+
+      //       // Preparar la consulta para actualizar los exámenes
+      //       const updateExamsQuery = `
+      //      UPDATE pkt_grant.entrance_exams
+      //      SET name = $1
+      //      WHERE student_ci_passport = $2 AND name = $3;
+      //  `;
+
+      //       // Crear promesas para actualizar los exámenes
+      //       const examPromises = entrance_exams.map((exam: any) => {
+      //         return db.query(updateExamsQuery, [exam, updatedCiPassport, exam]               ); // Puedes usar un identificador único si es necesario
+      //       }               );
+
+      // Preparar la consulta para eliminar los exámenes existentes
+      const deleteExamsQuery = `
+      DELETE FROM pkt_grant.entrance_exams
+      WHERE student_ci_passport = $1;
+  `;
+
+      // Eliminar los exámenes existentes
+      return db.query(deleteExamsQuery, [updatedCiPassport]);
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
     })
     .then(() => {
       // Preparar la consulta para insertar los nuevos exámenes
       const examsQuery = `
+<<<<<<< HEAD
       INSERT INTO pkt_grant.entrance_exams (name, student_ci_passport)
       VALUES ($1, $2);
   `;
+=======
+      INSERT INTO pkt_grant.entrance_exams (name, points, student_ci_passport)(name, student_ci_passport)
+      VALUES ($1, $2               );
+  `;
+
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       // Insertar cada examen en la tabla entrance_exams
       const examPromises = entrance_exams.map((exam: any) => {
         return db.query(examsQuery, [exam, ci_passport]); // Usar ci_passport para la clave foránea
@@ -379,6 +451,10 @@ app.put("/api/modify-student", (req, res) => {
       // Ejecutar todas las actualizaciones de exámenes
       return Promise.all(examPromises);
     })
+<<<<<<< HEAD
+=======
+    .then(() => {})
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
     .catch((err) => {
       console.error("Error al ejecutar la consulta", err);
       res.status(500).json({ message: "Error en la base de datos" });
@@ -483,7 +559,11 @@ app.get("/api/cip-student", async (req, res) => {
 `
     );
 
+<<<<<<< HEAD
     res.send(result.rows.reverse());
+=======
+    res.send(result.rows);
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   } catch (error) {
     console.error(error);
     res.status(500).send("Error en la consulta");
@@ -635,6 +715,10 @@ app.delete("/api/cip-student/remove-cip-student/:id", (req, res) => {
   FROM pkt_grant.cip_student cs
   LEFT JOIN pkt_grant.student s ON cs.ci_passport = s.ci_passport
   LEFT JOIN pkt_grant.official o ON cs.id_official = o.id
+<<<<<<< HEAD
+=======
+  WHERE cs.id = $1;
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
 `;
 
   db.query(query, [id])
@@ -750,7 +834,11 @@ app.get("/api/diul-student", async (req, res) => {
 `
     );
 
+<<<<<<< HEAD
     res.send(result.rows.reverse());
+=======
+    res.send(result.rows);
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   } catch (error) {
     console.error(error);
     res.status(500).send("Error en la consulta");
@@ -906,6 +994,10 @@ app.delete("/api/diul-student/remove-diul-student/:id", (req, res) => {
   FROM pkt_grant.diul_student cs
   LEFT JOIN pkt_grant.student s ON cs.ci_passport = s.ci_passport
   LEFT JOIN pkt_grant.official o ON cs.id_official = o.id
+<<<<<<< HEAD
+=======
+  WHERE cs.id = $1;
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
 `;
 
   db.query(query, [id])

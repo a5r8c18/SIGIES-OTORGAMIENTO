@@ -113,12 +113,18 @@ export class DiulStudentComponent implements OnInit {
     console.log(id);
     this.studentDiulService.removeByCi(id).subscribe((studentDiulService) => {
       this.studentsDiul = studentDiulService;
+<<<<<<< HEAD
 
       this.datas = this.formattedStudents;
       console.log(this.datas);
       this.router.navigateByUrl('/assignment/grant/diul-student');
       this.information = 'Eliminación realizada con éxito!';
     });
+=======
+      this.datas = this.formattedStudents;
+    });
+    this.information = 'Eliminación realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   removeStudentsSelected() {
@@ -132,6 +138,10 @@ export class DiulStudentComponent implements OnInit {
         this.router.navigateByUrl('/assignment/grant/diul-student');
         this.information = 'Eliminación realizada con éxito!';
       });
+<<<<<<< HEAD
+=======
+    this.information = 'Eliminación por lote realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   handleInfo(receivedInfo: CombinedData[]) {
@@ -147,7 +157,11 @@ export class DiulStudentComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'Eliminar') {
         this.removeStudentByCi(data.selectKey);
+<<<<<<< HEAD
       } else if (data.action === 'Eliminar por lote') {
+=======
+      } else if (data.action === 'eliminar por lote') {
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
         this.selectIds = data.selectKeys;
         this.removeStudentsSelected();
       }

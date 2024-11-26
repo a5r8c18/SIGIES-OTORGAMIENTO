@@ -110,6 +110,10 @@ export class OfficialComponent implements OnInit {
       this.information = 'Eliminación realizada con éxito!';
       this.router.navigateByUrl('/assignment/grant/official');
     });
+<<<<<<< HEAD
+=======
+    this.information = 'Eliminación realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   removeOfficialsSelected() {
@@ -123,7 +127,11 @@ export class OfficialComponent implements OnInit {
 
         this.router.navigateByUrl('/assignment/grant/official');
       });
+<<<<<<< HEAD
     this.information = 'Eliminación realizada con éxito!';
+=======
+    this.information = 'Eliminación por lote realizada con éxito!';
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
   }
 
   handleInfo(receivedInfo: Official[]) {
@@ -139,7 +147,11 @@ export class OfficialComponent implements OnInit {
     if (data.confirm) {
       if (data.action === 'Eliminar') {
         this.removeOfficialById(data.selectKey);
+<<<<<<< HEAD
       } else if (data.action === 'Eliminar por lote') {
+=======
+      } else if (data.action === 'eliminar por lote') {
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
         this.selectedIds = data.selectKeys;
         this.removeOfficialsSelected();
       }

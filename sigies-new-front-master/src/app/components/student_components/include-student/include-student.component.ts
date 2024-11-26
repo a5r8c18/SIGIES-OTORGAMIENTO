@@ -59,6 +59,7 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
           ),
         ],
       ],
+<<<<<<< HEAD
       ci_passport: ['', [Validators.required]],
       awarded_specialty: [
         '',
@@ -69,6 +70,10 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
           ),
         ],
       ],
+=======
+      ci_passport: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      awarded_specialty: ['', [Validators.required]],
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       gender: ['', [Validators.required]],
       address: ['', [Validators.required]],
       isforeign: ['', []],
@@ -82,7 +87,11 @@ export class IncludeStudentComponent implements OnInit, AfterViewInit {
         ],
       ],
       pre_university: ['', [Validators.required]],
+<<<<<<< HEAD
       entrance_exams: this.formBuilder.array([]), // Cambiado a FormArray
+=======
+      entrance_exams: this.formBuilder.array([], [Validators.required]), // Cambiado a FormArray
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
       academic_index: ['', [Validators.required]],
       grade_average: ['', [Validators.required]],
       scholarship_right: ['', []],

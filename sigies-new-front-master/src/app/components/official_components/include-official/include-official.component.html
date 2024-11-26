@@ -42,7 +42,10 @@
                 formControlName="officialLastName"
                 placeholder=""
                 pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+<<<<<<< HEAD
                 maxlength="100"
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 required
               />
               <div class="text-danger error-message" style="display: none">
@@ -64,6 +67,7 @@
                 formControlName="officialPosition"
                 placeholder=""
                 pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+<<<<<<< HEAD
                 maxlength="100"
                 required
               />
@@ -105,6 +109,46 @@
               />
               <div class="valid-feedback">Campo Convocatoria relleno</div>
               <div class="invalid-feedback">
+=======
+                required
+              />
+              <div class="valid-feedback">Campo Cargo relleno</div>
+              <div class="invalid-feedback">
+                El Cargo no debe estar en blanco ni tener números o caracteres
+                especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Procesamiento*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="prosecution"
+                placeholder=""
+                pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
+                required
+              />
+              <div class="valid-feedback">Campo Procesamiento relleno</div>
+              <div class="invalid-feedback">
+                El Procesamiento no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
+            </div>
+            <div class="col-md-12">
+              <span style="color: azure"><h6>Convocatoria*</h6></span>
+              <input
+                class="form-control"
+                type="text"
+                name="name"
+                formControlName="convocation"
+                placeholder=""
+                pattern="[A-Za-z]+"
+                required
+              />
+              <div class="valid-feedback">Campo Convocatoria relleno</div>
+              <div class="invalid-feedback">
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 La Convocatoria no debe estar en blanco ni tener números o
                 caracteres especiales.
               </div>

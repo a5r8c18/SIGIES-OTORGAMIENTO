@@ -16,7 +16,10 @@
               <select
                 class="form-select mt-3"
                 formControlName="ci_passport"
+<<<<<<< HEAD
                 maxlength="100"
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 required
               >
                 <option selected disabled value="">Estudiante:</option>
@@ -38,7 +41,10 @@
               <select
                 class="form-select mt-3"
                 formControlName="id_official"
+<<<<<<< HEAD
                 maxlength="100"
+=======
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 required
               >
                 <option selected disabled value="">Funcionario:</option>
@@ -76,9 +82,20 @@
                 name="description"
                 formControlName="description"
                 placeholder=""
+<<<<<<< HEAD
                 rows="4"
                 maxlength="255"
               ></textarea>
+=======
+                pattern="[A-Za-z]+"
+                rows="4"
+              ></textarea>
+              <div class="valid-feedback">Campo Descripción correcto</div>
+              <div class="invalid-feedback">
+                El campo descripción no debe estar en blanco ni tener números o
+                caracteres especiales.
+              </div>
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
             </div>
 
             <div class="col-md-12">
@@ -89,8 +106,12 @@
                 name="name"
                 formControlName="student_type"
                 placeholder=""
+<<<<<<< HEAD
                 pattern="^(?! )[A-Za-záéíóúÁÉÍÓÚñÑ]+( [A-Za-záéíóúÁÉÍÓÚñÑ]+)*$"
                 maxlength="100"
+=======
+                pattern="[A-Za-z]+"
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 required
               />
               <div class="valid-feedback">Campo Tipo de Estudiante relleno</div>
@@ -101,7 +122,11 @@
             </div>
 
             <div class="col-md-12">
+<<<<<<< HEAD
               <span style="color: azure"><h6>Comisión*</h6></span>
+=======
+              <span style="color: azure"><h6>Comisíon*</h6></span>
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
               <input
                 class="form-control"
                 type="text"
@@ -110,12 +135,20 @@
                 placeholder=""
                 title="Solo se permiten letras"
                 pattern="[A-Za-z]+"
+<<<<<<< HEAD
                 maxlength="100"
                 required
               />
               <div class="valid-feedback">Campo Comisión relleno</div>
               <div class="invalid-feedback">
                 El campo Comisión no debe estar en blanco ni tener caracteres
+=======
+                required
+              />
+              <div class="valid-feedback">Campo Comisíon relleno</div>
+              <div class="invalid-feedback">
+                El campo Comisíon no debe estar en blanco ni tener caracteres
+>>>>>>> 7f8c1f3936d6985bce14d5050be4ce0a2ca13cad
                 especiales.
               </div>
             </div>
