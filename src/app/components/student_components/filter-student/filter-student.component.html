@@ -1,0 +1,80 @@
+<form [formGroup]="studentForm">
+  <div class="form-group input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01"
+        >Ci o Pasaporte</label
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="ci_passport"
+    />
+  </div>
+  <div class="form-group input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Sexo</span>
+    </div>
+    <select class="form-select" formControlName="gender" style="margin-top: 0">
+      <option selected disabled value="">Sexo</option>
+      <option value="masculino">Masculino</option>
+      <option value="femenino">Femenino</option>
+    </select>
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Nombre(s)</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="name"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Apellidos</span>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="lastname"
+    />
+  </div>
+  <div class="form-group input-group input-group-sm mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-sm"
+        >Especialidad Otorgada</span
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      aria-label="Small"
+      aria-describedby="inputGroup-sizing-sm"
+      formControlName="awarded_specialty"
+    />
+  </div>
+  <div class="button-container">
+    <button class="effect" (click)="filter()" type="submit" title="Filtrar">
+      <div class="text">
+        <img
+          src="../../../assets/search.svg"
+          viewBox="0 0 448 512"
+          width="16"
+          title="filter-alt"
+          alt="Filtrar"
+        />Filtrar
+      </div>
+    </button>
+    <button class="effect" (click)="restore()" title="Restablecer">
+      <div class="text">Restablecer</div>
+    </button>
+  </div>
+</form>
